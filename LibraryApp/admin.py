@@ -3,9 +3,9 @@ from .models import Customer, Category, Book, Loan, Author
 
 @admin.register(Book)
 class BooKAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'author')
+    list_display = ('title', 'category')
     list_filter = ['category']
-    search_fields = ['title', 'category', 'author']
+    search_fields = ['title']
     list_per_page = 12
     
 
@@ -35,7 +35,7 @@ class CategoryAdmin(admin.ModelAdmin):
 class LoanAdmin(admin.ModelAdmin):
     list_display = ('begin_date', 'end_date', 'customer', 'book')
     list_filter = ['book']
-    search_fields = ['begin_date', 'end_date', 'customer', 'book']
+    search_fields = ['begin_date', 'end_date']
     list_per_page = 12
     
      

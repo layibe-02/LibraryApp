@@ -1,4 +1,7 @@
 from django.db import models
+from django.utils import timezone
+from datetime import timedelta
+from django.core.mail import send_mail
 
 class Customer(models.Model):
     name = models.CharField(max_length=60,verbose_name="Nom")
@@ -53,7 +56,7 @@ class Book(models.Model):
     title = models.CharField(max_length=100, verbose_name="Titre")
     creation_date = models.DateField(verbose_name="Date de parution")
     total_exemplaires = models.IntegerField(default=1, verbose_name="Nombre total d'exemplaire")
-    author = models.ForeignKey(Author, on_delete=models.DO_NOTHING, verbose_name="Auteur")
+    authors = models.ManyToManyField(Author, verbose_name="Auteur")
     registration_date = models.DateTimeField(auto_now_add=True, null=True, verbose_name="Date d'enregistrement")
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING, verbose_name="Categorie", null=True)
     
@@ -66,8 +69,9 @@ class Book(models.Model):
         db_table = "Livre"
     
 class Loan(models.Model):
-    begin_date = models.DateTimeField(verbose_name="Date d'emprunt")
+    begin_date = models.DateTimeField(default=timezone.now, verbose_name="Date d'emprunt")
     end_date = models.DateField(verbose_name="Delai")
+    loan_durarion = models.IntegerField(default=14, verbose_name="Durée de prêt")
     customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING, verbose_name="Client")
     book = models.ForeignKey(Book, on_delete=models.DO_NOTHING, verbose_name="Livre")
     
@@ -77,11 +81,19 @@ class Loan(models.Model):
     def __str__(self) -> str:
         return self.end_date
     
-    def __str__(self) -> str:
-        return str(self.customer)
+    def est_en_retard(self):
+        return_date = self.end_date + timedelta(days=self.loan_durarion)
+        return return_date < timezone.now().date()
     
-    def __str__(self) -> str:
-        return str(self.book)
+    def sendMail():
+        message = 'Contenu du message'
+        send_mail(
+            'Sujet du message',
+            message,
+            'narcisse.layibe@facsciences-uy1.cm',
+            ['destinataire@example.com'],
+            fail_silently=False,
+        )
     
     class Meta:
         verbose_name = "Emprunt"

@@ -1,15 +1,12 @@
-{% load static %} 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion de la bibliothèque</title>
-    <link rel="stylesheet" href="{% static 'LibraryApp/css/main.css' %}">
-</head>
-<body>
-    <h1> Bienvenue dans l'application de Gestion de la bibliothèque </h1>
-    <p> {{ message}} </p>
-</body>
-</html> 
+{% include "LibraryApp/include/begin_page.html" %} 
+
+    <h1> Bienvenue dans LibraryApp </h1>
+    
+    <p><a href="{% url 'LibraryApp:add'%}">| Ajouter</a> | <a href="{% url 'LibraryApp:edit'%}">Éditer</a> | <a href="{% url 'LibraryApp:delete'%}">Suppimer |</a> </p>
+    <ul>
+        {% for book in books %}
+        <li><a href="{% url 'LibraryApp:show' book.id %}">{{ book.title }}</a></li>
+        {% endfor %} 
+    </ul>
+
+{% include "LibraryApp/include/end_page.html" %} 

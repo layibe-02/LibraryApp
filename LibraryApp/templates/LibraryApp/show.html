@@ -1,0 +1,18 @@
+{% include "LibraryApp/include/begin_page.html" %} 
+
+    <h1> {{ book.title }} </h1>
+
+    <p> ISBN : {{ book.isbn }} </p>
+    <p> Date de parution : {{ book.creation_date }} </p> 
+    <p> Nombre d'exemplaires : {{ book.total_exemplaires }} </p>
+    <p> Auteur : {{ book.authors }} </p>
+    <p> Catégorie : {{ book.category }} </p>
+
+
+
+    <p><a href="{% url 'LibraryApp:index' %}">&laquo; Retourner à la liste de livres</a></p>
+
+{% include "LibraryApp/include/end_page.html" %} 
+
+
+

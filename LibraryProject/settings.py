@@ -1,5 +1,6 @@
 from pathlib import Path
 from decouple import config
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,6 +28,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "LibraryApp",
+    "celery",
+    "django_celery_results",
 ]
 
 MIDDLEWARE = [
@@ -93,7 +96,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "fr-FR"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Africa/Douala"
 
 USE_I18N = True
 
@@ -104,8 +107,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+STATICFILES_DIR = [
+    os.path.join(BASE_DIR, 'LibraryProject/static'),
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Configuration de l'envoi d'e-mails
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmai.com'  # Remplacez par l'hôte SMTP réel
+EMAIL_PORT = 587  # Remplacez par le port SMTP réel
+EMAIL_HOST_USER = 'narcisse.layibe@facsciences-uy1.cm'  # Remplacez par votre adresse e-mail
+EMAIL_HOST_PASSWORD = '68la67yiNA.'  # Remplacez par votre mot de passe e-mail
+EMAIL_USE_TLS = True  # Utilisez TLS pour le chiffrement
