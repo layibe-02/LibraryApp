@@ -1,0 +1,43 @@
+{% include "LibraryApp/include/begin_page.html" %}
+
+<div class="container">
+    <header class="text-center mt-3 mb-4 pb-3 btn-primary">
+        <h1 class="text-light">{{ customer.name }} {{ customer.username }}</h1>
+    </header>
+
+    <div class="card">
+        <div class="card-body">
+            <p class="card-text"><strong>Profession:</strong> {{ customer.job }}</p>
+            <p class="card-text"><strong>Adresse:</strong> {{ customer.postal }}</p>
+            <p class="card-text"><strong>E-mail:</strong> {{ customer.email }}</p>
+            
+            <a href="{% url 'LibraryApp:index' %}" class="btn btn-primary btn-sm">Retour au menu</a>
+            <a href="{% url 'LibraryApp:customer_list' %}" class="btn btn-primary btn-sm">Liste des clients</a>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: rgb(211, 241, 233);
+    }
+
+    .btn-custom-cerulean {
+        color: #ffffff;
+        background-color: #007ba7; /* Bleue céruléen */
+        border-color: #007ba7; /* Bleue céruléen */
+    }
+
+    .card {
+        margin-top: 20px;
+    }
+
+    .btn-primary {
+        color: #ffffff;
+        background-color: #007ba7; /* Bleue céruléen */
+        border-color: #007ba7; /* Bleue céruléen */
+    }
+</style>
+
+{% include "LibraryApp/include/end_page.html" %}

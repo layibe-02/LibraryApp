@@ -1,12 +1,170 @@
-{% include "LibraryApp/include/begin_page.html" %} 
+<!DOCTYPE html>
+<html lang="en">
 
-    <h1> Bienvenue dans LibraryApp </h1>
-    
-    <p><a href="{% url 'LibraryApp:add'%}">| Ajouter</a> | <a href="{% url 'LibraryApp:edit'%}">Éditer</a> | <a href="{% url 'LibraryApp:delete'%}">Suppimer |</a> </p>
-    <ul>
-        {% for book in books %}
-        <li><a href="{% url 'LibraryApp:show' book.id %}">{{ book.title }}</a></li>
-        {% endfor %} 
-    </ul>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration de Gestion de la Bibliothèque</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Ajoutez d'autres liens vers vos feuilles de style ici -->
+    <style>
+        body {
+            background-color: #f0f8ff; /* Couleur plus claire */
+            font-family: 'Arial', sans-serif;
+        }
 
-{% include "LibraryApp/include/end_page.html" %} 
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #fff; /* Fond blanc */
+            border-radius: 10px; /* Coins arrondis */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Légère ombre */
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        button {
+            margin-top: 20px;
+        }
+
+        /* Ajout de styles Bootstrap pour rendre le menu horizontal */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #007bff; /* Couleur bleue pour les liens */
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline; /* Souligner au survol */
+        }
+
+        /* Ajout du style pour le footer */
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #fff;
+            border-top: 1px solid #e5e5e5; /* Bordure en haut du footer */
+        }
+
+        /* Style pour la galerie d'images Bootstrap */
+        .carousel-inner img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <p class="h4 text-dark">Administration de Gestion de la Bibliothèque</p>
+            <nav>
+                <a href="{% url 'LibraryApp:loan_list' %}">Emprunts</a>
+                <a href="{% url 'LibraryApp:customer_list' %}">Clients</a>
+                <a href="{% url 'LibraryApp:book_list' %}">Livres</a>
+                <a href="{% url 'LibraryApp:author_list' %}">Auteurs</a>
+                <a href="{% url 'LibraryApp:author_list' %}">Catégories</a>
+            </nav>
+        </header>
+
+        {% load static %}
+        <div id="imageCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{% static 'LibraryApp/css/images/img1.jpg' %}" alt="Image 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'LibraryApp/css/images/img2.jpg' %}" alt="Image 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'LibraryApp/css/images/img3.jpg' %}" alt="Image 3">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'LibraryApp/css/images/img5.jpg' %}" alt="Image 5">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'LibraryApp/css/images/img6.jpg' %}" alt="Image 6">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'LibraryApp/css/images/img7.jpg' %}" alt="Image 7">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'LibraryApp/css/images/img8.jpg' %}" alt="Image 8">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'LibraryApp/css/images/img9.jpg' %}" alt="Image 9">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'LibraryApp/css/images/img10.jpg' %}" alt="Image 10">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'LibraryApp/css/images/img11.jpg' %}" alt="Image 11">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'LibraryApp/css/images/img12.jpg' %}" alt="Image 12">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'LibraryApp/css/images/img13.jpg' %}" alt="Image 13">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'LibraryApp/css/images/img14.jpg' %}" alt="Image 14">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'LibraryApp/css/images/img15.jpg' %}" alt="Image 15">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'LibraryApp/css/images/img16.jpg' %}" alt="Image 16">
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#imageCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#imageCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Ajout du footer -->
+    <footer>
+        <p>&copy; 2024 Bibliothèque publique</p>
+    </footer>
+
+    <!-- Ajout de script pour le fonctionnement du carousel Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Ajout de script pour changer d'image toutes les 5 secondes -->
+    <script>
+        $(document).ready(function () {
+            setInterval(function () {
+                $('#imageCarousel').carousel('next');
+            }, 5000);
+        });
+    </script>
+</body>
+
+</html>

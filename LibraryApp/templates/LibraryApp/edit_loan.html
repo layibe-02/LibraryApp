@@ -1,0 +1,103 @@
+{% include "LibraryApp/include/begin_page.html" %}
+
+{% block content %}
+<div class="container mt-3">
+    <header class="text-center mt-3 mb-4 pb-3 btn-primary text-light">
+        <h3>Modifier l'emprunt</h3>
+    </header>
+
+    <form method="post" action="{% url 'LibraryApp:edit_loan' loan.id %}" class="mb-3">
+        {% csrf_token %}
+        
+        <div class="form-group row">
+            <label for="{{ form.field_name.id_for_label }}" class="col-sm-4 col-form-label">{{ form.begin_date.label_tag }}</label>
+            <div class="col-sm-8">
+                {{ form.begin_date }}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="{{ form.field_name.id_for_label }}" class="col-sm-4 col-form-label">{{ form.end_date.label_tag }}</label>
+            <div class="col-sm-8">
+                {{ form.end_date }}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="{{ form.field_name.id_for_label }}" class="col-sm-4 col-form-label">{{ form.customer.label_tag }}</label>
+            <div class="col-sm-8">
+                {{ form.customer }}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="{{ form.field_name.id_for_label }}" class="col-sm-4 col-form-label">{{ form.book.label_tag }}</label>
+            <div class="col-sm-8">
+                {{ form.book }}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="{{ form.field_name.id_for_label }}" class="col-sm-4 col-form-label">{{ form.rendered.label_tag }}</label>
+            <div class="col-sm-8">
+                {{ form.rendered }}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-8 offset-sm-4">
+                <button type="submit" class="btn btn-warning">Enregistrer</button>
+            </div>
+        </div>
+    </form>
+    
+    <div class="d-flex justify-content-between">
+        <a href="{% url 'LibraryApp:loan_list' %}" class="btn btn-primary mb-3">Liste des emprunts</a>
+        <a href="{% url 'LibraryApp:index' %}" class="btn btn-primary mb-3">Retour au menu</a>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f0f8ff; /* Couleur plus claire */
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: auto;
+        margin-top: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Légère ombre */
+        border-radius: 10px; /* Coins arrondis */
+        padding: 20px;
+    }
+
+    /* Style pour le formulaire */
+    form {
+        max-width: 600px;
+        margin: auto;
+    }
+
+    label {
+        padding-top: 8px; /* Ajuster le positionnement vertical du label */
+    }
+
+    .btn-warning {
+        color: #ffffff;
+        background-color: #ff2400; /* Rouge écarlate */
+        border-color: #ff2400; /* Rouge écarlate */
+    }
+
+    header {
+        padding: 20px;
+    }
+    
+    .btn-primary {
+        color: #ffffff;
+        background-color: #007ba7; /* Bleue céruléen */
+        border-color: #007ba7; /* Bleue céruléen */
+    }
+</style>
+
+{% endblock %}
+
+{% include "LibraryApp/include/end_page.html" %}

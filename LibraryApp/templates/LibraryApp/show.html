@@ -1,18 +1,51 @@
-{% include "LibraryApp/include/begin_page.html" %} 
+{% include "LibraryApp/include/begin_page.html" %}
 
-    <h1> {{ book.title }} </h1>
+<div class="container">
+    <header class="text-center mt-3 mb-4 pb-3 btn-primary">
+        <h1 class="text-light">{{ book.title }}</h1>
+    </header>
 
-    <p> ISBN : {{ book.isbn }} </p>
-    <p> Date de parution : {{ book.creation_date }} </p> 
-    <p> Nombre d'exemplaires : {{ book.total_exemplaires }} </p>
-    <p> Auteur : {{ book.authors }} </p>
-    <p> Catégorie : {{ book.category }} </p>
+    <div class="card">
+        <div class="card-body">
+            <p class="card-text"><strong>ISBN:</strong> {{ book.isbn }}</p>
+            
+            <p class="card-text"><strong>Auteur(s):</strong>
+                {% for author in book.authors.all %}
+                    {{ author.name }} {{ author.username }}
+                    {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>            
+            
+            <p class="card-text"><strong>Catégorie:</strong> {{ book.category }}</p>
+            <p class="card-text"><strong>Nombre d'exemplaires disponibles:</strong> {{ book.total_exemplaires }}</p>
+            <p class="card-text"><strong>Date de parution:</strong> {{ book.date_publication }}</p>
 
+            <a href="{% url 'LibraryApp:index' %}" class="btn btn-primary btn-sm">Retour au menu</a>
+            <a href="{% url 'LibraryApp:book_list' %}" class="btn btn-primary btn-sm">Liste des livres</a>
+        </div>
+    </div>
+</div>
 
+<style>
+    body {
+        background-color: rgb(211, 241, 233);
+    }
 
-    <p><a href="{% url 'LibraryApp:index' %}">&laquo; Retourner à la liste de livres</a></p>
+    .container {
+        max-width: 1000px; /* Ajustez la largeur maximale selon vos préférences */
+        margin: auto;
+        margin-top: 20px;
+    }
 
-{% include "LibraryApp/include/end_page.html" %} 
+    .card {
+        margin-top: 20px;
+    }
 
+    .btn-primary {
+        color: #ffffff;
+        background-color: #007ba7; /* Bleue céruléen */
+        border-color: #007ba7; /* Bleue céruléen */
+    }
+</style>
 
-
+{% include "LibraryApp/include/end_page.html" %}

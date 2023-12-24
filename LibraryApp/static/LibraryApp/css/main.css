@@ -1,8 +1,5 @@
-body
-{   
-    height: auto;
-    margin: auto;
-    width: 800px;
+body {   
+    background-color: rgb(211, 241, 233);
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
-h1{ margin: auto; color: blue; text-align: center;}
-p{margin: auto; color: brown;}

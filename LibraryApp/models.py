@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from datetime import timedelta
 from django.core.mail import send_mail
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Customer(models.Model):
     name = models.CharField(max_length=60,verbose_name="Nom")
@@ -12,16 +13,13 @@ class Customer(models.Model):
     registration_date = models.DateTimeField(auto_now_add=True, null=True, verbose_name="Date d'enregistrement")
     
     def __str__(self) -> str:
-        return self.name
-    
-    def __str__(self) -> str:
-        return self.username
+        return f"{self.name} {self.username}"
     
     class Meta:
         verbose_name = "Client"
         verbose_name_plural = "Clients"
         db_table = "Client"
-    
+         
 class Author(models.Model):
     name = models.CharField(max_length=60, verbose_name="Nom")
     username = models.CharField(max_length=60, verbose_name="Prenom")
@@ -29,10 +27,7 @@ class Author(models.Model):
     date_of_birth = models.DateField(verbose_name="Date de naissance")
     
     def __str__(self) -> str:
-        return self.name
-    
-    def __str__(self) -> str:
-        return self.username
+        return f"{self.name} {self.username}"
     
     class Meta:
         verbose_name = "Auteur"
@@ -54,10 +49,17 @@ class Category(models.Model):
 class Book(models.Model):
     isbn =models.CharField(max_length=50, verbose_name="ISBN")
     title = models.CharField(max_length=100, verbose_name="Titre")
-    creation_date = models.DateField(verbose_name="Date de parution")
-    total_exemplaires = models.IntegerField(default=1, verbose_name="Nombre total d'exemplaire")
-    authors = models.ManyToManyField(Author, verbose_name="Auteur")
-    registration_date = models.DateTimeField(auto_now_add=True, null=True, verbose_name="Date d'enregistrement")
+    date_publication = models.IntegerField(
+        verbose_name="Date de parution", null=True,
+        help_text="Entrez l'année",
+        validators=[
+            MinValueValidator(1000),
+            MaxValueValidator(2100)
+        ]
+    )
+    total_exemplaires = models.IntegerField(default=1, verbose_name="Nombre d'exemplaire")
+    authors = models.ManyToManyField(Author, verbose_name="Auteur", db_table="Livre_Auteur")
+    registration_date = models.DateTimeField(auto_now_add=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING, verbose_name="Categorie", null=True)
     
     def __str__(self) -> str:
@@ -70,30 +72,16 @@ class Book(models.Model):
     
 class Loan(models.Model):
     begin_date = models.DateTimeField(default=timezone.now, verbose_name="Date d'emprunt")
-    end_date = models.DateField(verbose_name="Delai")
-    loan_durarion = models.IntegerField(default=14, verbose_name="Durée de prêt")
+    end_date = models.DateField(default=timezone.now() + timezone.timedelta(days=3), null=True, verbose_name="Delai")
     customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING, verbose_name="Client")
     book = models.ForeignKey(Book, on_delete=models.DO_NOTHING, verbose_name="Livre")
+    rendered =  models.BooleanField(default=False, verbose_name="Rendu")
     
     def __str__(self) -> str:
-        return self.begin_date
+        return str(self.begin_date)
     
     def __str__(self) -> str:
-        return self.end_date
-    
-    def est_en_retard(self):
-        return_date = self.end_date + timedelta(days=self.loan_durarion)
-        return return_date < timezone.now().date()
-    
-    def sendMail():
-        message = 'Contenu du message'
-        send_mail(
-            'Sujet du message',
-            message,
-            'narcisse.layibe@facsciences-uy1.cm',
-            ['destinataire@example.com'],
-            fail_silently=False,
-        )
+        return str(self.end_date)
     
     class Meta:
         verbose_name = "Emprunt"

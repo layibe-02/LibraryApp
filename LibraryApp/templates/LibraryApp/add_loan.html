@@ -1,0 +1,88 @@
+{% include "LibraryApp/include/begin_page.html" %}
+
+<div class="container mt-3">
+    <header class="text-center mt-3 mb-4 pb-3 btn-primary text-light">
+        <h1>Ajout d'un emprunt</h1>
+    </header>
+
+    <form method="post" action="{% url 'LibraryApp:add_loan' %}" class="mb-3">
+        {% csrf_token %}
+        <div class="form-group row">
+            <label for="{{ form.begin_date.id_for_label }}" class="col-sm-4 col-form-label">{{ form.begin_date.label_tag }}</label>
+            <div class="col-sm-8">
+                {{ form.begin_date }}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="{{ form.end_date.id_for_label }}" class="col-sm-4 col-form-label">{{ form.end_date.label_tag }}</label>
+            <div class="col-sm-8">
+                {{ form.end_date }}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="{{ form.customer.id_for_label }}" class="col-sm-4 col-form-label">{{ form.customer.label_tag }}</label>
+            <div class="col-sm-8">
+                {{ form.customer }}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="{{ form.book.id_for_label }}" class="col-sm-4 col-form-label">{{ form.book.label_tag }}</label>
+            <div class="col-sm-8">
+                {{ form.book }}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-8 offset-sm-4">
+                <button type="submit" class="btn btn-success">Enregistrer</button>
+            </div>
+        </div>
+    </form>
+    
+    <div class="d-flex justify-content-between">
+        <a href="{% url 'LibraryApp:loan_list' %}" class="btn btn-primary mb-3">Lister les emprunts</a>
+        <a href="{% url 'LibraryApp:index' %}" class="btn btn-primary mb-3">Retourner au menu</a>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: rgb(211, 241, 233);
+        margin-top: 25px;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: auto;
+        margin-top: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        padding: 20px;
+    }
+
+    .btn-success {
+        color: #ffffff;
+        background-color: #28a745; /* Vert */
+        border-color: #28a745; /* Vert */
+    }
+
+    form {
+        max-width: 600px;
+        margin: auto;
+    }
+    
+    label {
+        padding-top: 8px; /* Ajuster le positionnement vertical du label */
+    }
+
+    .btn-primary {
+        color: #ffffff;
+        background-color: #007ba7; /* Bleue céruléen */
+        border-color: #007ba7; /* Bleue céruléen */
+    }
+</style>
+
+{% include "LibraryApp/include/end_page.html" %}

@@ -1,0 +1,14 @@
+{% include "LibraryApp/include/begin_page.html" %} 
+
+    <p class="h1 text-center mt-3 mb-4 pb-3 text-primary">
+        <h1 style="text-align: center;">Gestion des Livres</h1>
+    </p>
+     <!-- LibraryApp/templates/LibraryApp/book_detail.html -->
+    <h2>{{ book.title }}</h2>
+        <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+        <p><strong>Date de publication:</strong> {{ book.date_publication }}</p>
+        <!-- Ajoutez d'autres attributs ici -->
+
+        <a href="{% url 'LibraryApp:index' %}">Retour à la liste des livres</a>
+
+{% include "LibraryApp/include/end_page.html" %} 

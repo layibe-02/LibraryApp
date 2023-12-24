@@ -1,0 +1,90 @@
+{% include "LibraryApp/include/begin_page.html" %}
+
+<div class="container">
+    <header class="text-center mt-3 mb-4 pb-3 btn-primary">
+        <h3 class="text-light">Liste des emprunts</h3>
+    </header>
+
+    <a href="{% url 'LibraryApp:add_loan' %}" class="btn btn-info mb-3"><i class="bi bi-plus"></i> Ajouter un emprunt</a>
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th class="text-center">Date d'emprunt</th>
+                <th class="text-center">Date de retour prévue</th>
+                <th class="text-center">Client</th>
+                <th class="text-center">Livre</th>
+                <th class="text-center">Rendu</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for loan in loans %}
+                <tr>
+                    <td class="text-center">{{ loan.begin_date }}</td>
+                    <td class="text-center">{{ loan.end_date }}</td>
+                    <td class="text-center">{{ loan.customer.name }} {{ loan.customer.username }}</td>
+                    <td class="text-center">{{ loan.book.title }}</td>
+                    <td class="text-center">{{ loan.rendered }}</td>
+                    <td class="text-center align-right">
+                        <a href="{% url 'LibraryApp:edit_loan' loan.id %}" class="btn btn-warning btn-sm" title="Modifier l'emprunt"><i class="bi bi-pencil text-dark"></i></a>
+                        <a href="{% url 'LibraryApp:delete_loan' loan.id %}" class="btn btn-danger btn-sm" title="Supprimer l'emprunt"><i class="bi bi-trash-fill text-light"></i></a>
+                        <a href="{% url 'LibraryApp:index' %}" class="btn btn-secondary btn-sm" title="Retour à la liste"><i class="bi bi-arrow-left-circle text-light"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    body {
+        background-color: #f0f8ff; /* Une couleur plus claire */
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: auto;
+        margin-top: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Légère ombre */
+        border-radius: 10px; /* Coins arrondis */
+        padding: 20px;
+    }
+
+    header.bg-info {
+        background-color: #f8f9fa; /* Couleur de fond */
+    }
+
+    /* Couleur des boutons */
+    .btn-info,
+    a.btn-info,
+    a.btn-info:visited {
+        color: #ffffff;
+        background-color: #17a2b8; /* Bleue info */
+        border-color: #17a2b8; /* Bleue info */
+    }
+
+    a.btn-info:hover,
+    a.btn-info:active {
+        color: #ffffff; /* Couleur du texte des liens au survol ou au clic */
+    }
+
+    /* Ajout d'un style pour les icônes */
+    .btn i {
+        margin-right: 5px;
+    }
+
+    /* Style pour les boutons du formulaire de recherche */
+    .input-group-append button {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .btn-primary {
+        color: #ffffff;
+        background-color: #007ba7; /* Bleue céruléen */
+        border-color: #007ba7; /* Bleue céruléen */
+    }
+</style>
+
+{% include "LibraryApp/include/end_page.html" %}

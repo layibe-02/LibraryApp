@@ -1,6 +1,0 @@
-Cher {{ Customer.name }},
-
-Le livre '{{ Book.title }}' emprunté le {{ Emprunt.begin_date|date:"d/m/Y" }} est en retard. Veuillez le retourner dès que possible.
-
-Cordialement,
-Votre bibliothèque

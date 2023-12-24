@@ -1,0 +1,57 @@
+{% include "LibraryApp/include/begin_page.html" %}
+
+{% block content %}
+<div class="container mt-3">
+    <header class="text-center mt-3 mb-4 pb-3 btn-primary text-light">
+        <h3>Supprimer l'emprunt</h3>
+    </header>
+
+    <p>Voulez-vous vraiment supprimer l'emprunt effectué le "{{ loan.begin_date }}" pour être rendu le "{{ loan.end_date }}" du livre "{{ loan.book }}" emprunté par "{{ loan.customer }}"?</p>
+
+    <form method="post" action="{% url 'LibraryApp:delete_loan' loan.id %}" class="mb-3">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Confirmer la suppression</button>
+    </form>
+    
+    <div class="d-flex justify-content-between">
+        <a href="{% url 'LibraryApp:loan_list' %}" class="btn btn-primary mb-3">Rejeter la suppression</a>
+        <a href="{% url 'LibraryApp:index' %}" class="btn btn-primary mb-3">Retour au menu</a>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: rgb(211, 241, 233);
+        margin-top: 25px;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: auto;
+        margin-top: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        padding: 20px;
+    }
+
+    .btn-danger {
+        color: #ffffff;
+        background-color: #ff2400; /* Rouge écarlate */
+        border-color: #ff2400; /* Rouge écarlate */
+    }
+
+    form {
+        max-width: 600px;
+        margin: auto;
+    }
+
+    .btn-primary {
+        color: #ffffff;
+        background-color: #007ba7; /* Bleue céruléen */
+        border-color: #007ba7; /* Bleue céruléen */
+    }
+</style>
+
+{% endblock %}
+
+{% include "LibraryApp/include/end_page.html" %}

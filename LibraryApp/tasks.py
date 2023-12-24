@@ -1,37 +1,17 @@
-from django.template.loader import render_to_string
 from celery import shared_task
 from django.core.mail import send_mail
 from django.utils import timezone
-from .models import Loan, Book, Customer
+from .models import Loan
 
 @shared_task
-def envoyer_emails_retard():
-    emprunts_en_retard = Loan.objects.filter(est_en_retard=True)
+def send_late_reminder_email():
+    # Récupérer tous les emprunts en retard
+    overdue_loans = Loan.objects.filter(end_date__lt=timezone.now(), rendered=False)
 
-    for emprunt in emprunts_en_retard:
-        Customer = emprunt.Customer
-        Customer = emprunt.Book
+    for loan in overdue_loans:
+        subject = 'Rappel de retard pour le livre'
+        message = f"Le livre {loan.book.title} doit être rendu avant la date limite."
+        from_email = 'libraryappweb@gmail.com'
+        to_email = [loan.customer.email]
 
-        sujet = 'Rappel : Retour du livre en retard'
-        message = f"Cher {Customer.name},\n\nLe livre '{Book.title}' emprunté le {emprunt.end_date.strftime('%d/%m/%Y')} est en retard. Veuillez le retourner dès que possible.\n\nCordialement,\nVotre bibliothèque"
-
-        send_mail(sujet, message, 'narcisse.layibe@facsciences-uy1.cm', [Customer.email])
-'''        
-@shared_task
-def envoyer_emails_retard():
-    emprunts_en_retard = Loan.objects.filter(est_en_retard=True)
-
-    for emprunt in emprunts_en_retard:
-        Customer = emprunt.customer
-        Book = emprunt.Book
-
-        sujet = 'Rappel : Retour du livre en retard'
-        contexte = {
-            'client': Customer,
-            'livre': Book,
-            'emprunt': emprunt,
-        }
-        message = render_to_string('email_retard.txt', contexte)
-
-        send_mail(sujet, message, 'narcisse.layibe@facsciences-uy1.cm', [Customer.email], fail_silently=False)
-'''
+        send_mail(subject, message, from_email, to_email)

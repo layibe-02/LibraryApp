@@ -1,0 +1,48 @@
+{% include "LibraryApp/include/begin_page.html" %}
+
+{% block content %}
+<div class="container mt-3">
+    <header class="text-center mt-3 mb-4 pb-3 btn-custom-cerulean">
+        <h3 class="text-light">Supprimer le client</h3>
+    </header>
+
+    <p>Voulez-vous vraiment supprimer le client "{{ customer.name }} {{ customer.username }}" ?</p>
+
+    <form method="post" action="{% url 'LibraryApp:delete_customer' customer.id %}" class="mb-3">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Confirmer la suppression</button>
+    </form>
+    
+    <div class="d-flex justify-content-between">
+        <a href="{% url 'LibraryApp:customer_list' %}" class="btn btn-primary mb-3">Rejeter la suppression</a>
+        <a href="{% url 'LibraryApp:index' %}" class="btn btn-primary mb-3">Retour au menu</a>
+    </div>
+</div>
+{% endblock %}
+
+
+<style>
+    body {
+        background-color: rgb(211, 241, 233);
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: auto;
+        margin-top: 20px;
+    }
+
+    .table {
+        margin-top: 20px;
+    }
+
+    .btn-custom-cerulean {
+        color: #ffffff;
+        background-color: #007ba7; /* Bleue céruléen */
+        border-color: #007ba7; /* Bleue céruléen */
+    }
+
+</style>
+
+
+{% include "LibraryApp/include/end_page.html" %}

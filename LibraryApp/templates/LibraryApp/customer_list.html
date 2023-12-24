@@ -1,0 +1,74 @@
+{% include "LibraryApp/include/begin_page.html" %}
+
+<div class="container">
+    <header class="btn-primary text-light text-center mt-3 mb-4 pb-3">
+        <h3>Liste des Clients</h3>
+    </header>
+
+    <a href="{% url 'LibraryApp:add_customer' %}" class="btn btn-primary mb-3"><i class="bi bi-plus text-light"></i> Ajouter un client</a>
+
+    <!-- Utilisation des classes Bootstrap pour le tableau -->
+    <table class="table table-striped table-hover table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th class="text-center">Nom et Prénom(s)</th>
+                <th class="text-center">Actions</th>
+                <!-- Ajoutez d'autres colonnes si nécessaire -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.name }} {{ customer.username }}</td>
+                    <td class="text-center" align="right">
+                        <a href="{% url 'LibraryApp:show_customer' customer.id %}" class="btn btn-primary btn-sm" title="Détails du client"><i class="bi bi-info-circle text-light"></i></a>
+                        <a href="{% url 'LibraryApp:edit_customer' customer.id %}" class="btn btn-warning btn-sm" title="Modifier le client"><i class="bi bi-pencil text-dark"></i></a>
+                        <a href="{% url 'LibraryApp:delete_customer' customer.id %}" class="btn btn-danger btn-sm" title="Supprimer le client"><i class="bi bi-trash-fill text-light"></i></a>
+                        <a href="{% url 'LibraryApp:index' %}" class="btn btn-secondary btn-sm" title="Retour à la liste"><i class="bi bi-arrow-left-circle text-light"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    body {
+        background-color: #f0f8ff; /* Une couleur plus claire */
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: auto;
+        margin-top: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Légère ombre */
+        border-radius: 10px; /* Coins arrondis */
+        padding: 20px;
+    }
+
+    .btn-custom-cerulean {
+        color: #ffffff;
+        background-color: #007ba7; /* Bleue céruléen */
+        border-color: #007ba7; /* Bleue céruléen */
+    }
+
+    .btn-primary {
+        color: #ffffff;
+        background-color: #007ba7; /* Bleue céruléen */
+        border-color: #007ba7; /* Bleue céruléen */
+    }
+
+    /* Ajout d'un style pour les icônes */
+    .btn i {
+        margin-right: 5px;
+    }
+
+    /* Style pour les boutons du formulaire de recherche */
+    .input-group-append button {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    
+</style>
+
+{% include "LibraryApp/include/end_page.html" %}

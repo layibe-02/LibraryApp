@@ -1,0 +1,93 @@
+{% include "LibraryApp/include/begin_page.html" %}
+
+<div class="container mt-3">
+    <header class="text-center mt-3 mb-4 pb-3 btn-custom-cerulean">
+        <h3 class="text-light">Ajout d'un client</h3>
+    </header>
+
+    <form method="post" action="{% url 'LibraryApp:add_customer' %}" class="mb-3">
+        {% csrf_token %}
+        <table class="table table-borderless">
+            <tr>
+                <td>{{ form.label_tag }}</td>
+                <td>{{ form }}</td>
+            </tr>
+            <tr>
+                <td><button type="submit" class="btn btn-success">Enregistrer</button></td>
+                <td></td>
+            </tr>
+        </table>
+    </form>
+    
+    <div class="d-flex justify-content-between">
+        <a href="{% url 'LibraryApp:add_loan' %}" class="btn btn-primary mb-3">Ajouter un emprunt</a>
+        <a href="{% url 'LibraryApp:customer_list' %}" class="btn btn-primary mb-3">Lister les clients</a>
+        <a href="{% url 'LibraryApp:index' %}" class="btn btn-primary mb-3">Retourner au menu</a>
+
+        <!--
+        <a href="{% url 'LibraryApp:book_list' %}" class="btn btn-success mb-3">Liste des livres</a>
+        -->
+    </div>
+</div>
+
+<!--
+<footer class="bg-dark text-light text-center py-2">
+    <p>&copy; 2023 Ma Bibliothèque</p>
+</footer>
+-->
+
+<style>
+    body {
+        background-color: rgb(211, 241, 233);
+        margin-top: 25px; 
+    }
+
+    .container {
+        
+        margin: auto;
+    }
+
+    header {
+        width: 100%;
+        padding: 20px;
+    }
+
+    form {
+        margin-top: 20px;
+    }
+
+    button {
+        margin-top: 20px;
+    }
+
+    footer {
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+    }
+
+    .btn-custom-cerulean {
+        color: #ffffff;
+        background-color: #007ba7; /* Bleue céruléen */
+        border-color: #007ba7; /* Bleue céruléen */
+    }
+
+    @media (max-width: 576px) {
+        /* Ajoutez des styles spécifiques pour les petits écrans ici */
+        body {
+            margin-top: 70px; /* Ajustez la marge en haut pour éviter le chevauchement avec le header */
+        }
+
+        header {
+            padding: 10px;
+        }
+    }
+    
+    .btn-primary {
+        color: #ffffff;
+        background-color: #007ba7; /* Bleue céruléen */
+        border-color: #007ba7; /* Bleue céruléen */
+    }
+</style>
+
+{% include "LibraryApp/include/end_page.html" %}

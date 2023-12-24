@@ -1,6 +1,7 @@
 from pathlib import Path
 from decouple import config
 import os
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,8 +29,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "LibraryApp",
-    "celery",
-    "django_celery_results",
+#    "celery",
+#    "django_celery_results",
+
 ]
 
 MIDDLEWARE = [
@@ -116,10 +118,20 @@ STATICFILES_DIR = [
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Configuration de l'envoi d'e-mails
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmai.com'  # Remplacez par l'hôte SMTP réel
-EMAIL_PORT = 587  # Remplacez par le port SMTP réel
-EMAIL_HOST_USER = 'narcisse.layibe@facsciences-uy1.cm'  # Remplacez par votre adresse e-mail
-EMAIL_HOST_PASSWORD = '68la67yiNA.'  # Remplacez par votre mot de passe e-mail
-EMAIL_USE_TLS = True  # Utilisez TLS pour le chiffrement
+
+# Configuration de Celery
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Africa/Douala'
+
+
+CELERY_BEAT_SCHEDULE = {
+    'envoi_rappel_retard': {
+        'task': 'LibraryProject.LibraryApp.tasks.send_late_reminder_email',
+        'schedule': timedelta(days=1),  # Planifiez la tâche tous les jours
+    },
+}
+
