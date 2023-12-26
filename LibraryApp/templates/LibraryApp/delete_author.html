@@ -1,52 +1,55 @@
 {% include "LibraryApp/include/begin_page.html" %}
 
 {% block content %}
-<div class="container mt-3">
-    <header class="text-center mt-3 mb-4 pb-3 btn-primary">
-        <h3 class="text-light">Supprimer le livre</h3>
+<div class="container mt-5">
+    <header class="text-center mt-3 mb-4 pb-3 bg-custom-cerulean text-light rounded">
+        <h1 class="display-4">Supprimer l'auteur</h1>
     </header>
 
-    <p>Voulez-vous vraiment supprimer l'auteur "{{ author.name }} {{ author.username }}" ?</p>
+    <div class="card p-4">
+        <p class="lead">Voulez-vous vraiment supprimer l'auteur "{{ author.name }} {{ author.username }}" ?</p>
 
-    <form method="post" action="{% url 'LibraryApp:delete_author' author.id %}" class="mb-3">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Confirmer la suppression</button>
-    </form>
-    
-    <div class="d-flex justify-content-between">
-        <a href="{% url 'LibraryApp:author_list' %}" class="btn btn-primary mb-3">Rejeter la suppression</a>
-        <a href="{% url 'LibraryApp:index' %}" class="btn btn-primary mb-3">Retour au menu</a>
+        <form method="post" action="{% url 'LibraryApp:delete_author' author.id %}" class="mb-3">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Confirmer la suppression</button>
+        </form>
+
+        <div class="d-flex justify-content-between">
+            <a href="{% url 'LibraryApp:author_list' %}" class="btn btn-primary">Rejeter la suppression</a>
+            <a href="{% url 'LibraryApp:index' %}" class="btn btn-primary">Retour au menu</a>
+        </div>
     </div>
 </div>
-{% endblock %}
 
 <style>
     body {
         background-color: rgb(211, 241, 233);
+        margin-top: 25px;
     }
 
     .container {
-        max-width: 1000px;
+        max-width: 800px;
         margin: auto;
         margin-top: 20px;
     }
 
-    .table {
-        margin-top: 20px;
+    .card {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
-    .btn-custom-cerulean {
-        color: #ffffff;
+    .bg-custom-cerulean {
         background-color: #007ba7; /* Bleue céruléen */
-        border-color: #007ba7; /* Bleue céruléen */
     }
 
-    .btn-primary {
+    .btn-danger {
         color: #ffffff;
-        background-color: #007ba7; /* Bleue céruléen */
-        border-color: #007ba7; /* Bleue céruléen */
+        background-color: #ff2400; /* Rouge écarlate */
+        border-color: #ff2400; /* Rouge écarlate */
     }
-
 </style>
+
+{% endblock %}
 
 {% include "LibraryApp/include/end_page.html" %}

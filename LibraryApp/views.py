@@ -5,15 +5,14 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.utils import timezone
-from .models import Book, Customer, Loan, Author
+from .models import Book, Customer, Loan, Author, Category
 from django.contrib import messages
-from .forms import BookForm, LoanForm, SearchForm, AuthorForm, CustomerForm
+from .forms import BookForm, LoanForm, SearchForm, AuthorForm, CustomerForm, CategoryForm
 
 #______________________________________________________________________________________________________
 
 def index(request):
-    context = { "menu" : "MENU DE LA BIBLIOTHÈQUE" }
-    return render(request, "LibraryApp/index.html", context)
+    return render(request, "LibraryApp/index.html")
 
 #------------------------------------------------------------------------------------------------------
 
@@ -83,7 +82,19 @@ def add_customer(request):
         
     context = {"form":form}
     return render(request,"LibraryApp/add_customer.html", context)
-    
+
+def add_category(request):
+    if request.method == "POST":
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            form = CategoryForm()
+            return redirect("LibraryApp:add_category")
+    else:
+        form = CategoryForm()
+        
+    context = {"form":form}
+    return render(request,"LibraryApp/add_category.html", context)
 #------------------------------------------------------------------------------------------------------
     
 def show(request, book_id):
@@ -135,6 +146,11 @@ def customer_list(request):
     context = {"customers": customers}
     return render(request, "LibraryApp/customer_list.html", context)
 
+def category_list(request):
+    categories = Category.objects.all().order_by('label')
+    context = {"categories": categories}
+    return render(request, "LibraryApp/category_list.html", context)
+    
 #------------------------------------------------------------------------------------------------------
 
 def edit_loan(request, loan_id):
@@ -211,6 +227,23 @@ def edit_author(request, author_id):
     }
     return render(request, 'LibraryApp/edit_author.html', context)
 
+def edit_category(request, category_id):
+    category = get_object_or_404(Category, pk=category_id)
+
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            return redirect('LibraryApp:category_list')
+    else:
+        form = CategoryForm(instance=category)
+
+    context = {
+        'form': form,
+        'category': category,
+    }
+    return render(request, 'LibraryApp/edit_category.html', context)
+
 #------------------------------------------------------------------------------------------------------
 
 def delete_loan(request, loan_id):
@@ -252,3 +285,13 @@ def delete_author(request, author_id):
 
     context = {'author': author}
     return render(request, 'LibraryApp/delete_author.html', context)
+
+def delete_category(request, category_id):
+    category = get_object_or_404(Category, pk=category_id)
+
+    if request.method == 'POST':
+        category.delete()
+        return redirect('LibraryApp:category_list')
+
+    context = {'category': category}
+    return render(request, 'LibraryApp/delete_category.html', context)

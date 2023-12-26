@@ -1,56 +1,92 @@
 {% include "LibraryApp/include/begin_page.html" %}
 
 {% block content %}
-<div class="container mt-3">
+<div class="container mt-5">
     <header class="text-center mt-3 mb-4 pb-3 btn-custom-cerulean">
         <h3 class="text-light">Modifier le client</h3>
     </header>
 
-    <form method="post" action="{% url 'LibraryApp:edit_customer' customer.id %}" class="mb-3">
-        {% csrf_token %}
-        <table class="table table-borderless">
-            <tr>
-                <td>{{ form.label_tag }}</td>
-                <td>{{ form }}</td>
-            </tr>
-            <tr>
-                <td><button type="submit" class="btn btn-warning">Enregistrer</button></td>
-                <td></td>
-            </tr>
-        </table>
-    </form>
-    
-    <div class="d-flex justify-content-between">
-        <a href="{% url 'LibraryApp:customer_list' %}" class="btn btn-primary mb-3">Lister les clients</a>
-        <a href="{% url 'LibraryApp:index' %}" class="btn btn-primary mb-3">Retour au menu</a>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <form method="post" action="{% url 'LibraryApp:edit_customer' customer.id %}" class="mb-3">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="{{ form.label_tag }}" class="text-primary">{{ form.label_tag }}</label>
+                    {{ form }}
+                </div>
+                <button type="submit" class="btn btn-warning btn-block">Enregistrer</button>
+            </form>
+
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'LibraryApp:customer_list' %}" class="btn btn-primary btn-block mb-3">Lister les clients</a>
+                <a href="{% url 'LibraryApp:index' %}" class="btn btn-primary btn-block mb-3">Retour au menu</a>
+            </div>
+        </div>
     </div>
 </div>
 
 <style>
     body {
-        background-color: rgb(211, 241, 233);
+        background: linear-gradient(to right, #87CEEB, #1E90FF);
+        margin-top: 25px;
     }
 
     .container {
-        
         margin: auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        padding: 20px;
+        background-color: #fff;
+    }
+
+    header {
+        width: 100%;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    form {
         margin-top: 20px;
     }
 
-    .table {
+    button {
         margin-top: 20px;
     }
 
     .btn-custom-cerulean {
         color: #ffffff;
-        background-color: #007ba7; /* Bleue céruléen */
-        border-color: #007ba7; /* Bleue céruléen */
+        background-color: #007ba7;
+        border-color: #007ba7;
+        border-radius: 8px;
     }
 
-    .btn-custom-rouge-ecarlate {
+    .btn-warning {
         color: #ffffff;
-        background-color: #ff2400; /* Rouge écarlate */
-        border-color: #ff2400; /* Rouge écarlate */
+        background-color: #FFD700; /* Jaune doré pour le bouton de sauvegarde */
+        border-color: #FFD700;
+        border-radius: 8px;
+    }
+
+    @media (max-width: 576px) {
+        body {
+            margin-top: 70px;
+        }
+
+        header {
+            padding: 10px;
+        }
+    }
+
+    .btn-primary {
+        color: #ffffff;
+        background-color: #007ba7;
+        border-color: #007ba7;
+        border-radius: 8px;
+    }
+
+    label {
+        padding-top: 8px;
+        color: #1E90FF;
     }
 </style>
 

@@ -2,37 +2,23 @@
 
 <div class="container mt-3">
     <header class="text-center mt-3 mb-4 pb-3 btn-custom-cerulean text-light">
-        <h3>Ajout d'un Auteur</h3>
+        <h3>Ajout d'une catégorie</h3>
     </header>
 
-    <form method="post" action="{% url 'LibraryApp:add_author' %}" class="mb-3">
+    <form method="post" action="{% url 'LibraryApp:add_category' %}" class="mb-3">
         {% csrf_token %}
 
         <div class="form-group row">
-            <label for="{{ form.name.id_for_label }}" class="col-sm-4 col-form-label">{{ form.name.label_tag }}</label>
+            <label for="{{ form.code.id_for_label }}" class="col-sm-4 col-form-label">{{ form.code.label_tag }}</label>
             <div class="col-sm-8">
-                {{ form.name }}
+                {{ form.code }}
             </div>
         </div>
 
         <div class="form-group row">
-            <label for="{{ form.username.id_for_label }}" class="col-sm-4 col-form-label">{{ form.username.label_tag }}</label>
+            <label for="{{ form.label.id_for_label }}" class="col-sm-4 col-form-label">{{ form.label.label_tag }}</label>
             <div class="col-sm-8">
-                {{ form.username }}
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="{{ form.nationality.id_for_label }}" class="col-sm-4 col-form-label">{{ form.nationality.label_tag }}</label>
-            <div class="col-sm-8">
-                {{ form.nationality }}
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="{{ form.date_of_birth.id_for_label }}" class="col-sm-4 col-form-label">{{ form.date_of_birth.label_tag }}</label>
-            <div class="col-sm-8">
-                {{ form.date_of_birth }}
+                {{ form.label }}
             </div>
         </div>
 
@@ -44,7 +30,7 @@
     </form>
     
     <div class="d-flex justify-content-between">
-        <a href="{% url 'LibraryApp:author_list' %}" class="btn btn-primary btn-block mb-3">Lister les auteurs</a>
+        <a href="{% url 'LibraryApp:category_list' %}" class="btn btn-primary btn-block mb-3">Lister les catégories</a>
     </div>
 </div>
 

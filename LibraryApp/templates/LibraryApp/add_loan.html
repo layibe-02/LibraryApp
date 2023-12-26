@@ -1,88 +1,120 @@
 {% include "LibraryApp/include/begin_page.html" %}
 
-<div class="container mt-3">
+<div class="container mt-5">
     <header class="text-center mt-3 mb-4 pb-3 btn-primary text-light">
         <h1>Ajout d'un emprunt</h1>
     </header>
 
-    <form method="post" action="{% url 'LibraryApp:add_loan' %}" class="mb-3">
-        {% csrf_token %}
-        <div class="form-group row">
-            <label for="{{ form.begin_date.id_for_label }}" class="col-sm-4 col-form-label">{{ form.begin_date.label_tag }}</label>
-            <div class="col-sm-8">
-                {{ form.begin_date }}
-            </div>
-        </div>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <form method="post" action="{% url 'LibraryApp:add_loan' %}" class="mb-3">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <label for="{{ form.begin_date.id_for_label }}" class="col-sm-4 col-form-label text-primary">{{ form.begin_date.label_tag }}</label>
+                    <div class="col-sm-8">
+                        {{ form.begin_date }}
+                    </div>
+                </div>
 
-        <div class="form-group row">
-            <label for="{{ form.end_date.id_for_label }}" class="col-sm-4 col-form-label">{{ form.end_date.label_tag }}</label>
-            <div class="col-sm-8">
-                {{ form.end_date }}
-            </div>
-        </div>
+                <div class="form-group row">
+                    <label for="{{ form.end_date.id_for_label }}" class="col-sm-4 col-form-label text-primary">{{ form.end_date.label_tag }}</label>
+                    <div class="col-sm-8">
+                        {{ form.end_date }}
+                    </div>
+                </div>
 
-        <div class="form-group row">
-            <label for="{{ form.customer.id_for_label }}" class="col-sm-4 col-form-label">{{ form.customer.label_tag }}</label>
-            <div class="col-sm-8">
-                {{ form.customer }}
-            </div>
-        </div>
+                <div class="form-group row">
+                    <label for="{{ form.customer.id_for_label }}" class="col-sm-4 col-form-label text-primary">{{ form.customer.label_tag }}</label>
+                    <div class="col-sm-8">
+                        {{ form.customer }}
+                    </div>
+                </div>
 
-        <div class="form-group row">
-            <label for="{{ form.book.id_for_label }}" class="col-sm-4 col-form-label">{{ form.book.label_tag }}</label>
-            <div class="col-sm-8">
-                {{ form.book }}
-            </div>
-        </div>
+                <div class="form-group row">
+                    <label for="{{ form.book.id_for_label }}" class="col-sm-4 col-form-label text-primary">{{ form.book.label_tag }}</label>
+                    <div class="col-sm-8">
+                        {{ form.book }}
+                    </div>
+                </div>
 
-        <div class="form-group row">
-            <div class="col-sm-8 offset-sm-4">
-                <button type="submit" class="btn btn-success">Enregistrer</button>
+                <div class="form-group row">
+                    <label for="{{ form.rendered.id_for_label }}" class="col-sm-4 col-form-label text-primary">{{ form.rendered.label_tag }}</label>
+                    <div class="col-sm-8">
+                        {{ form.rendered }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-8 offset-sm-4">
+                        <button type="submit" class="btn btn-success btn-block">Enregistrer</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'LibraryApp:loan_list' %}" class="btn btn-primary btn-block mb-3">Lister les emprunts</a>
+                <a href="{% url 'LibraryApp:index' %}" class="btn btn-primary btn-block mb-3">Retourner au menu</a>
             </div>
         </div>
-    </form>
-    
-    <div class="d-flex justify-content-between">
-        <a href="{% url 'LibraryApp:loan_list' %}" class="btn btn-primary mb-3">Lister les emprunts</a>
-        <a href="{% url 'LibraryApp:index' %}" class="btn btn-primary mb-3">Retourner au menu</a>
     </div>
 </div>
 
 <style>
     body {
-        background-color: rgb(211, 241, 233);
+        background: linear-gradient(to right, #87CEEB, #1E90FF);
         margin-top: 25px;
     }
 
     .container {
-        max-width: 1200px;
         margin: auto;
-        margin-top: 20px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         border-radius: 10px;
         padding: 20px;
+        background-color: #fff;
     }
 
-    .btn-success {
-        color: #ffffff;
-        background-color: #28a745; /* Vert */
-        border-color: #28a745; /* Vert */
+    header {
+        width: 100%;
+        padding: 20px;
+        border-radius: 8px;
     }
 
     form {
-        max-width: 600px;
-        margin: auto;
+        margin-top: 20px;
     }
-    
-    label {
-        padding-top: 8px; /* Ajuster le positionnement vertical du label */
+
+    button {
+        margin-top: 20px;
     }
 
     .btn-primary {
         color: #ffffff;
-        background-color: #007ba7; /* Bleue céruléen */
-        border-color: #007ba7; /* Bleue céruléen */
+        background-color: #007ba7;
+        border-color: #007ba7;
+        border-radius: 8px;
+    }
+
+    .btn-success {
+        color: #ffffff;
+        background-color: #28a745;
+        border-color: #28a745;
+        border-radius: 8px;
+    }
+
+    @media (max-width: 576px) {
+        body {
+            margin-top: 70px;
+        }
+
+        header {
+            padding: 10px;
+        }
+    }
+
+    label {
+        padding-top: 8px;
+        color: #1E90FF;
     }
 </style>
 
-{% include "LibraryApp/include/end_page.html" %}
+{% include "LibraryApp/include/end_page.html"%}

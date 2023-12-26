@@ -1,15 +1,18 @@
 {% include "LibraryApp/include/begin_page.html" %}
 
 {% block content %}
-<div class="container mt-3">
-    <header class="text-center mt-3 mb-4 pb-3 btn-primary">
-        <h3 class="text-light">Supprimer le livre</h3>
+<div class="container mt-5">
+    <header class="text-center mt-3 mb-4 pb-3 bg-primary text-light rounded">
+        <h1 class="display-4">Supprimer le livre</h1>
     </header>
-
-    <p>Voulez-vous vraiment supprimer le livre "{{ book.title }}" écrit par "{% for author in book.authors.all %}
-        {{ author.name }} {{ author.username }}
-        {% if not forloop.last %}, {% endif %}
-    {% endfor %}" ?</p>
+    
+    <div class="card p-4">
+    <p class="lead">Voulez-vous vraiment supprimer le livre "{{ book.title }}" écrit par 
+        {% for author in book.authors.all %}
+            {{ author.name }} {{ author.username }}
+            {% if not forloop.last %}, {% endif %}
+        {% endfor %} ?
+    </p>
 
     <form method="post" action="{% url 'LibraryApp:delete_book' book.id %}" class="mb-3">
         {% csrf_token %}
@@ -17,39 +20,68 @@
     </form>
     
     <div class="d-flex justify-content-between">
-        <a href="{% url 'LibraryApp:book_list' %}" class="btn btn-primary mb-3">Rejeter la suppression</a>
-        <a href="{% url 'LibraryApp:index' %}" class="btn btn-primary mb-3">Retour au menu</a>
+        <a href="{% url 'LibraryApp:book_list' %}" class="btn btn-primary btn-block mb-3">Rejeter la suppression</a>
+        <a href="{% url 'LibraryApp:index' %}" class="btn btn-primary btn-block mb-3">Retour au menu</a>
+    </div>
     </div>
 </div>
-{% endblock %}
 
 <style>
     body {
         background-color: rgb(211, 241, 233);
+        margin-top: 25px;
     }
 
     .container {
-        max-width: 1000px;
+        max-width: 800px;
         margin: auto;
         margin-top: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        padding: 20px;
     }
 
-    .table {
-        margin-top: 20px;
+    .card {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
-    .btn-custom-cerulean {
+    header {
+        width: 100%;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    p.lead {
+        color: #007ba7;
+    }
+
+    .btn-danger {
         color: #ffffff;
-        background-color: #007ba7; /* Bleue céruléen */
-        border-color: #007ba7; /* Bleue céruléen */
+        background-color: #ff2400; /* Rouge écarlate */
+        border-color: #ff2400; /* Rouge écarlate */
+        border-radius: 8px;
     }
 
     .btn-primary {
         color: #ffffff;
         background-color: #007ba7; /* Bleue céruléen */
         border-color: #007ba7; /* Bleue céruléen */
+        border-radius: 8px;
     }
 
+    @media (max-width: 576px) {
+        body {
+            margin-top: 70px;
+        }
+
+        header {
+            padding: 10px;
+        }
+    }
 </style>
+
+{% endblock %}
 
 {% include "LibraryApp/include/end_page.html" %}

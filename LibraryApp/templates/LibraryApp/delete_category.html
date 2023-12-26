@@ -3,19 +3,19 @@
 {% block content %}
 <div class="container mt-5">
     <header class="text-center mt-3 mb-4 pb-3 bg-custom-cerulean text-light rounded">
-        <h1 class="display-4">Supprimer le client</h1>
+        <h1 class="display-4">Supprimer la categorie</h1>
     </header>
 
     <div class="card p-4">
-        <p class="lead">Voulez-vous vraiment supprimer le client "{{ customer.name }} {{ customer.username }}" ?</p>
+        <p class="lead">Voulez-vous vraiment supprimer la categorie "{{ category.label }}" ?</p>
 
-        <form method="post" action="{% url 'LibraryApp:delete_customer' customer.id %}" class="mb-3">
+        <form method="post" action="{% url 'LibraryApp:delete_category' category.id %}" class="mb-3">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">Confirmer la suppression</button>
         </form>
 
         <div class="d-flex justify-content-between">
-            <a href="{% url 'LibraryApp:customer_list' %}" class="btn btn-primary">Rejeter la suppression</a>
+            <a href="{% url 'LibraryApp:category_list' %}" class="btn btn-primary">Rejeter la suppression</a>
             <a href="{% url 'LibraryApp:index' %}" class="btn btn-primary">Retour au menu</a>
         </div>
     </div>
@@ -23,7 +23,7 @@
 
 <style>
     body {
-        background-color: #d3f1e9;
+        background-color: rgb(211, 241, 233);
         margin-top: 25px;
     }
 
