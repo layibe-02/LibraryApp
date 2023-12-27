@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required, permission_required, user_passes_test     
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.template import loader 
@@ -14,8 +15,13 @@ from .forms import BookForm, LoanForm, SearchForm, AuthorForm, CustomerForm, Cat
 def index(request):
     return render(request, "LibraryApp/index.html")
 
+def is_visitor(user):
+    return user.groups.filter(name = "Visiteurs").exists()
+
 #------------------------------------------------------------------------------------------------------
 
+@login_required
+@permission_required("LibraryApp.add_book")
 def add_book(request):
     if request.method == 'POST':
         form = BookForm(request.POST)
@@ -30,6 +36,8 @@ def add_book(request):
     context = { "form" : form }
     return render(request, "LibraryApp/add_book.html", context)
 
+@login_required
+@permission_required("LibraryApp.add_author")
 def add_author(request):
     if request.method == "POST":
         form = AuthorForm(request.POST)
@@ -43,6 +51,8 @@ def add_author(request):
     context = {"form": form}
     return render(request, "LibraryApp/add_author.html", context)
 
+@login_required
+@permission_required("LibraryApp.add_loan")
 def add_loan(request):
     error_message = None
 
@@ -69,7 +79,9 @@ def add_loan(request):
 
     context = {"form": form, "error_message": error_message}
     return render(request, "LibraryApp/add_loan.html", context)
-        
+ 
+@login_required     
+@permission_required("LibraryApp.add_customer")  
 def add_customer(request):
     if request.method == "POST":
         form = CustomerForm(request.POST)
@@ -83,6 +95,8 @@ def add_customer(request):
     context = {"form":form}
     return render(request,"LibraryApp/add_customer.html", context)
 
+@login_required
+@permission_required("LibraryApp.add_category")
 def add_category(request):
     if request.method == "POST":
         form = CategoryForm(request.POST)
@@ -96,12 +110,14 @@ def add_category(request):
     context = {"form":form}
     return render(request,"LibraryApp/add_category.html", context)
 #------------------------------------------------------------------------------------------------------
-    
-def show(request, book_id):
+
+@login_required   
+def show_book(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
     context = {"book": book}
-    return render(request, "LibraryApp/show.html", context)
+    return render(request, "LibraryApp/show_book.html", context)
 
+@login_required
 def show_customer(request, customer_id):
     customer = get_object_or_404(Customer, pk=customer_id)
     context = {"customer": customer}
@@ -109,6 +125,7 @@ def show_customer(request, customer_id):
 
 #------------------------------------------------------------------------------------------------------
 
+@login_required
 def book_list(request):
     form = SearchForm(request.GET)
     books = Book.objects.all().order_by("title")
@@ -131,21 +148,25 @@ def book_list(request):
     }
     return render(request, "LibraryApp/book_list.html", context)
 
+@login_required
 def loan_list(request):
     loans = Loan.objects.all().order_by("-begin_date")
     context = {"loans": loans}
     return render(request, "LibraryApp/loan_list.html", context) 
 
+@login_required
 def author_list(request):
     authors = Author.objects.all()
     context = {"authors":authors}
     return render(request, "LibraryApp/author_list.html", context)
 
+@login_required
 def customer_list(request):
     customers = Customer.objects.all().order_by("-registration_date")
     context = {"customers": customers}
     return render(request, "LibraryApp/customer_list.html", context)
 
+@login_required
 def category_list(request):
     categories = Category.objects.all().order_by('label')
     context = {"categories": categories}
@@ -153,6 +174,8 @@ def category_list(request):
     
 #------------------------------------------------------------------------------------------------------
 
+@login_required
+@permission_required("LibraryApp.change_loan")
 def edit_loan(request, loan_id):
     loan = get_object_or_404(Loan, pk=loan_id)
 
@@ -176,6 +199,8 @@ def edit_loan(request, loan_id):
     }
     return render(request, 'LibraryApp/edit_loan.html', context)
 
+@login_required
+@permission_required("LibraryApp.change_customer")
 def edit_customer(request, customer_id):
     customer = get_object_or_404(Customer, pk=customer_id)
 
@@ -193,6 +218,8 @@ def edit_customer(request, customer_id):
     }
     return render(request, 'LibraryApp/edit_customer.html', context)
 
+@login_required
+@permission_required("LibraryApp.change_book")
 def edit_book(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
 
@@ -210,6 +237,8 @@ def edit_book(request, book_id):
     }
     return render(request, 'LibraryApp/edit_book.html', context)
 
+@login_required
+@permission_required("LibraryApp.change_author")
 def edit_author(request, author_id):
     author = get_object_or_404(Author, pk=author_id)
 
@@ -227,6 +256,8 @@ def edit_author(request, author_id):
     }
     return render(request, 'LibraryApp/edit_author.html', context)
 
+@login_required
+@permission_required("LibraryApp.change_category")
 def edit_category(request, category_id):
     category = get_object_or_404(Category, pk=category_id)
 
@@ -246,6 +277,8 @@ def edit_category(request, category_id):
 
 #------------------------------------------------------------------------------------------------------
 
+@login_required
+@permission_required("LibraryApp.delete_loan")
 def delete_loan(request, loan_id):
     loan = get_object_or_404(Loan, pk=loan_id)
 
@@ -256,6 +289,8 @@ def delete_loan(request, loan_id):
     context = {'loan': loan}
     return render(request, 'LibraryApp/delete_loan.html', context)
 
+@login_required
+@permission_required("LibraryApp.delete_customer")
 def delete_customer(request, customer_id):
     customer = get_object_or_404(Customer, pk=customer_id)
 
@@ -266,6 +301,8 @@ def delete_customer(request, customer_id):
     context = {'customer': customer}
     return render(request, 'LibraryApp/delete_customer.html', context)
 
+@login_required
+@permission_required("LibraryApp.delete_book")
 def delete_book(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
 
@@ -276,6 +313,8 @@ def delete_book(request, book_id):
     context = {'book': book}
     return render(request, 'LibraryApp/delete_book.html', context)
 
+@login_required
+@permission_required("LibraryApp.delete_author")
 def delete_author(request, author_id):
     author = get_object_or_404(Author, pk=author_id)
 
@@ -286,6 +325,8 @@ def delete_author(request, author_id):
     context = {'author': author}
     return render(request, 'LibraryApp/delete_author.html', context)
 
+@login_required
+@permission_required("LibraryApp.delete_category")
 def delete_category(request, category_id):
     category = get_object_or_404(Category, pk=category_id)
 

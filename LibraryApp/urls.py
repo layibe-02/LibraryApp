@@ -5,7 +5,6 @@ app_name = 'LibraryApp'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    
     path('list/', views.book_list, name='book_list'),
     path('loan_list/', views.loan_list, name='loan_list'),
     path('author_list/', views.author_list, name='author_list'),
@@ -14,7 +13,7 @@ urlpatterns = [
     path('add_author/', views.add_author, name='add_author'),
     path('add_loan/', views.add_loan, name='add_loan'),
     path('add_customer/', views.add_customer, name='add_customer'),
-    path('show/<int:book_id>/', views.show, name='show'),
+    path('show_book/<int:book_id>/', views.show_book, name='show_book'),
     path('show_customer/<int:customer_id>/', views.show_customer, name='show_customer'),
     path('edit_loan/<int:loan_id>', views.edit_loan, name='edit_loan'),
     path('edit_customer/<int:customer_id>', views.edit_customer, name='edit_customer'),

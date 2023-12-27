@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background-color: #f0f8ff;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        form {
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form p {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
+        form label {
+            display: block;
+            margin: 10px 0 5px;
+            font-size: 16px;
+        }
+
+        form input[type="text"],
+        form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        form .error-message {
+            color: #ff0000;
+            margin-bottom: 10px;
+        }
+
+        form .alert {
+            font-size: 14px;
+        }
+
+        form a {
+            color: #3498db;
+        }
+
+        form a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form method="post">
+        {% csrf_token %}
+        <p>Connexion</p>
+        {% for message in messages %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+        <label for="id_username">Nom d'utilisateur:</label>
+        {{ form.username }}
+        {% if form.username.errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ form.username.errors }}
+            </div>
+        {% endif %}
+        <label for="id_password">Mot de passe:</label>
+        {{ form.password }}
+        {% if form.password.errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ form.password.errors }}
+            </div>
+        {% endif %}
+        <input type='submit' value="Se connecter">
+    </form>
+
+</body>
+
+</html>

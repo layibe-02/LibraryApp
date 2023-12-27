@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "LibraryApp",
+    "accounts",
 #    "celery",
 #    "django_celery_results",
 

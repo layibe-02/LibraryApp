@@ -5,6 +5,12 @@
         <h1>Ajout d'un emprunt</h1>
     </header>
 
+    {% if stock_finished %}
+        <div class="alert alert-danger" role="alert">
+            Le stock de ce livre est épuisé. Veuillez réapprovisionner avant d'ajouter un nouvel emprunt.
+        </div>
+    {% endif %}
+
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <form method="post" action="{% url 'LibraryApp:add_loan' %}" class="mb-3">
