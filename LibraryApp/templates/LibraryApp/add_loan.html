@@ -5,9 +5,9 @@
         <h1>Ajout d'un emprunt</h1>
     </header>
 
-    {% if stock_finished %}
-        <div class="alert alert-danger" role="alert">
-            Le stock de ce livre est épuisé. Veuillez réapprovisionner avant d'ajouter un nouvel emprunt.
+    {% if error_message %}
+        <div class="alert alert-danger text-center" role="alert">
+            {{ error_message }}
         </div>
     {% endif %}
 
@@ -40,6 +40,9 @@
                     <label for="{{ form.book.id_for_label }}" class="col-sm-4 col-form-label text-primary">{{ form.book.label_tag }}</label>
                     <div class="col-sm-8">
                         {{ form.book }}
+                        {% if form.book.errors %}
+                            <small class="text-danger">{{ form.book.errors.0 }}</small>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -70,53 +73,55 @@
         background: linear-gradient(to right, #87CEEB, #1E90FF);
         margin-top: 25px;
     }
-
+    
     .container {
+        width-max: 95%;
         margin: auto;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         border-radius: 10px;
         padding: 20px;
         background-color: #fff;
     }
-
+    
     header {
         width: 100%;
         padding: 20px;
         border-radius: 8px;
     }
-
+    
     form {
+        width-max: 75%;
         margin-top: 20px;
     }
-
+    
     button {
         margin-top: 20px;
     }
-
+    
     .btn-primary {
         color: #ffffff;
         background-color: #007ba7;
         border-color: #007ba7;
         border-radius: 8px;
     }
-
+    
     .btn-success {
         color: #ffffff;
         background-color: #28a745;
         border-color: #28a745;
         border-radius: 8px;
     }
-
+    
     @media (max-width: 576px) {
         body {
             margin-top: 70px;
         }
-
+    
         header {
             padding: 10px;
         }
     }
-
+    
     label {
         padding-top: 8px;
         color: #1E90FF;
@@ -124,3 +129,4 @@
 </style>
 
 {% include "LibraryApp/include/end_page.html"%}
+

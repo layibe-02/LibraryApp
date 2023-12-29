@@ -66,6 +66,17 @@ class CategoryForm(forms.ModelForm):
         self.fields['label'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Saisissez l\'étiquette'})
     
 
-class SearchForm(forms.Form):
-    search_query = forms.CharField(label='Rechercher un livre', max_length=100, required=False)
+class SearchBookForm(forms.Form):
+    search_query_book = forms.CharField(label='Rechercher un livre', max_length=100, required=False)
     
+class SearchAuthorForm(forms.Form):
+    search_query_author = forms.CharField(label='Rechercher un auteur', max_length=100, required=False)
+    
+class SearchCustomerForm(forms.Form):
+    search_query_customer = forms.CharField(label='Rechercher un client', max_length=100, required=False)
+
+class SearchCategoryForm(forms.Form):
+    search_query_category = forms.CharField(label='Rechercher une catégorie', max_length=100, required=False)
+    
+class SearchLoanForm(forms.Form):
+    search_query_loan = forms.CharField(label='Rechercher un emprunt', max_length=100, required=False)

@@ -5,14 +5,23 @@
         <h3 class="text-light">Liste des Categories</h3>
     </header>
 
+    <form method="GET" class="mb-3">
+        <div class="input-group">
+            <input type="text" class="form-control" name="search_query_category" placeholder="Rechercher une categorie (code ou label)" aria-label="Rechercher un auteur" aria-describedby="button-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit" id="button-addon2">Rechercher</button>
+            </div>
+        </div>
+    </form>
+
     <a href="{% url 'LibraryApp:add_category' %}" class="btn btn-custom-cerulean mb-3"><i class="bi bi-plus text-dark"></i> Ajouter une catégorie</a>
     
     <table class="table table-bordered table table-striped table-hover">
         <thead class="thead-light">
             <tr>
-                <th class="text-center">Code</th>
-                <th class="text-center">Catégorie</th>
-                <th class="text-center">Actions</th>
+                <th scope="col-md-2" class="text-center">Code</th>
+                <th scope="col-md-2" class="text-center">Catégorie</th>
+                <th scope="col-md-2" class="text-center">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -38,7 +47,7 @@
     }
 
     .container {
-        max-width: 1200px;
+        max-width: 95%;
         margin: auto;
         margin-top: 20px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Légère ombre */

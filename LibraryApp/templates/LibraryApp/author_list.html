@@ -5,15 +5,24 @@
         <h3 class="text-light">Liste des auteurs</h3>
     </header>
 
+    <form method="GET" class="mb-3">
+        <div class="input-group">
+            <input type="text" class="form-control" name="search_query_author" placeholder="Rechercher un auteur (nom, prenom ou nationalité)" aria-label="Rechercher un auteur" aria-describedby="button-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit" id="button-addon2">Rechercher</button>
+            </div>
+        </div>
+    </form>
+
     <a href="{% url 'LibraryApp:add_author' %}" class="btn btn-custom-cerulean mb-3"><i class="bi bi-plus text-dark"></i> Ajouter un auteur</a>
     
     <table class="table table-bordered table table-striped table-hover">
         <thead class="thead-light">
             <tr>
-                <th class="text-center">Nom et Prénom(s)</th>
-                <th class="text-center">Nationalité</th>
-                <th class="text-center">Date de naissance</th>
-                <th class="text-center">Actions</th>
+                <th scope="col-md-2" class="text-center">Nom et Prénom(s)</th>
+                <th scope="col-md-2" class="text-center">Nationalité</th>
+                <th scope="col-md-2" class="text-center">Date de naissance</th>
+                <th scope="col-md-2" class="text-center">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -40,7 +49,7 @@
     }
 
     .container {
-        max-width: 1200px;
+        max-width: 95%;
         margin: auto;
         margin-top: 20px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Légère ombre */

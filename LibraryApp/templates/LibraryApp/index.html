@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administration de Gestion de la Bibliothèque</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 
     <style>
         body {
@@ -34,6 +35,49 @@
             color: white;
             border-bottom: 1px solid #2980b9;
             padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            font-size: 32px;
+            margin-right: 10px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar form {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar label {
+            margin-right: 10px;
+            color: #333;
+        }
+
+        .search-bar input {
+            margin-right: 10px;
+        }
+
+        .search-bar button {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .search-bar button:hover {
+            background-color: #2980b9;
         }
 
         nav {
@@ -67,9 +111,17 @@
             margin: 20px;
         }
 
-        aside h2 {
+        aside h1 {
             margin-bottom: 10px;
             color: #fff;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+        }
+
+        aside h1 i {
+            font-size: 32px;
+            margin-right: 10px;
         }
 
         aside nav {
@@ -103,15 +155,10 @@
             background-color: #f1f1f1;
         }
 
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            background-color: #fff;
-            border-top: 1px solid #e5e5e5;
-        }
+        
 
         .carousel-inner img {
-            width: 100%;
+            width: 95%;
             height: auto;
             border-radius: 10px;
         }
@@ -121,49 +168,73 @@
             padding: 10px;
             background-color: #f1f1f1;
         }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #3498db; /* Couleur de fond */
+            color: black; /* Couleur du texte */
+        }
+
+        /* Liens de navigation dans le footer */
+        .nav-link {
+            color: #fff !important; /* Couleur du texte */
+        }
+
+        /* Style des liens de navigation au survol */
+        .nav-link:hover {
+            text-decoration: underline;
+            color: #e74c3c !important; /* Couleur du texte au survol */
+        }
+
     </style>
 </head>
 
 <body>
 
     <header>
-        <header>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-                <a class="navbar-brand" href="#">Logo</a>
-                
-                <div class="d-flex align-items-center">
-                    <div class="search-bar ml-3 mr-2">
-                        <form class="form-inline">
-                            <label class="text-dark" for="search">Rechercher :</label>
-                            <input type="text" class="form-control" id="search" name="search">
-                            <button type="submit" class="btn btn-primary">Rechercher</button>
-                        </form>
-                    </div>
-    
-                    {% if user.is_authenticated %}
-                        <p class="text-white mr-2"><a href="{% url 'accounts:logout' %}" class="btn btn-danger">Log Out</a></p>
-                    {% else %}
-                        <a href="{% url 'accounts:login' %}" class="btn btn-success mr-2"> <i class="fas fa-sign-in-alt"></i> Log in</a>
-                        <a href="{% url 'accounts:register' %}" class="btn btn-secondary"> <i class="fas fa-sign-out-alt"></i> Sign in</a>
-                    {% endif %}
-                </div>
-            </nav>
-        </header>
+        <div class="logo">
+            <i class="fas fa-book"></i> Bibliothèque
+        </div>
+        <div class="search-bar ml-3 mr-2">
+            <form class="form-inline">
+                <label class="text-dark" for="search">Rechercher :</label>
+                <input type="text" class="form-control" id="search" name="search">
+                <button type="submit" class="btn btn-primary">Rechercher</button>
+            </form>
+        </div>
+        <nav>
+            <div class="d-flex align-items-center">
+                {% if user.is_authenticated %}
+                <p class="text-white mr-2"><a href="{% url 'accounts:logout' %}" class="btn btn-danger">Log out</a></p>
+                {% else %}
+                <a href="{% url 'accounts:login' %}" class="btn btn-success mr-2"> <i class="fas fa-sign-in-alt"></i> Log
+                    in</a>
+                <a href="{% url 'accounts:register' %}" class="btn btn-secondary"> <i
+                        class="fas fa-sign-out-alt"></i> Sign in</a>
+                {% endif %}
+            </div>
+        </nav>
     </header>
 
     <div class="container">
         <aside class="col-md-3">
-            <h1 class="text-center text-dark" style="color: #fff;">Menu</h1>
+            <h1 class="text-center text-dark" style="color: #fff;"><i class="fas fa-bars"></i> Menu</h1>
             <nav>
-                <button class="btn btn-success text-light btn-block" onclick="window.location.href='{% url 'LibraryApp:loan_list' %}'">Emprunts</button>
-                <button class="btn btn-success text-light btn-block" onclick="window.location.href='{% url 'LibraryApp:customer_list' %}'">Clients</button>
-                <button class="btn btn-success text-light btn-block" onclick="window.location.href='{% url 'LibraryApp:book_list' %}'">Livres</button>
-                <button class="btn btn-success text-light btn-block" onclick="window.location.href='{% url 'LibraryApp:author_list' %}'">Auteurs</button>
-                <button class="btn btn-success text-light btn-block" onclick="window.location.href='{% url 'LibraryApp:category_list' %}'">Catégories</button>
+                <button class="btn btn-success text-light btn-block"
+                    onclick="window.location.href='{% url 'LibraryApp:loan_list' %}'">Emprunts</button>
+                <button class="btn btn-success text-light btn-block"
+                    onclick="window.location.href='{% url 'LibraryApp:customer_list' %}'">Clients</button>
+                <button class="btn btn-success text-light btn-block"
+                    onclick="window.location.href='{% url 'LibraryApp:book_list' %}'">Livres</button>
+                <button class="btn btn-success text-light btn-block"
+                    onclick="window.location.href='{% url 'LibraryApp:author_list' %}'">Auteurs</button>
+                <button class="btn btn-success text-light btn-block"
+                    onclick="window.location.href='{% url 'LibraryApp:category_list' %}'">Catégories</button>
             </nav>
         </aside>
 
-        <main>
+        <main class="col-md-9">
             <h1 class="text-center">Bienvenue sur l'administration de la bibliothèque!</h1>
             {% load static %}
             <div id="imageCarousel" class="carousel slide" data-ride="carousel">
@@ -218,34 +289,90 @@
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
                 </a>
-                    <a class="carousel-control-next" href="#imageCarousel" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
-
-                </div>
-                    <h2 class="text-center">L'équipe de gestion de la bibliothèque</h2>
-                </div>
+                <a class="carousel-control-next" href="#imageCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
         </main>
     </div>
 
+    <h2 class="text-center">L'équipe d'administration de la bibliothèque</h2>
+    Rien pour l'instant
+    <h2 class="text-center">L'équipe de gestion de la bibliothèque</h2>
+    Rien pour l'instant
+            
     <footer class="text-center">
+
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'LibraryApp:loan_list' %}">À propos</a>
+                        <a class="nav-link" href="#about">À propos</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'LibraryApp:customer_list' %}">Contacts</a>
+                        <a class="nav-link" href="#services">Services</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'LibraryApp:book_list' %}">Services</a>
+                        <a class="nav-link" href="#contacts">Contacts</a>
                     </li>
                 </ul>
             </div>
         </nav>
+
+        <div id="about" class="container">
+            <h2 class="text-center mt-5 mb-4">À propos</h2>
+            <div class="col-md-4">
+                <h4 class="text-center">Fonctionnalité 1</h4>
+                <p class="text-center">Gérez efficacement votre bibliothèque avec notre application web d'administration.</p>
+                <p class="text-center">Effectuez des opérations sur les emprunts, les clients, les livres, les auteurs et les catégories de livres.</p>
+                
+            </div>
+            <div class="col-md-4">
+                <h4 class="text-center">Fonctionnalité 2</h4>
+                <p class="text-center">Les administrateurs ont un contrôle total.</p>
+                <p class="text-center">Les gestionnaires peuvent effectuer des opérations spécifiques</p>
+                <p class="text-center">Les visiteurs n'ont que droit à la lecture</p>
+            </div>
+        </div>        
+
+        <div id="services" class="container">
+            <h2 class="text-center text-blue mt-5 mb-4">Services</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <h4 class="text-center">Service 1</h4>
+                    <p class="text-center">Ajout, suppression, modification et lecture d'emprunts.</p>
+                </div>
+                <div class="col-md-4">
+                    <h4 class="text-center">Service 2</h4>
+                    <p class="text-center">Gestion complète des clients, livres, auteurs et catégories.</p>
+                </div>
+                <div class="col-md-4">
+                    <h4 class="text-center">Service 3</h4>
+                    <p class="text-center">Détails sur les clients et les livres disponibles.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="contacts" class="container">
+            <h2 class="text-center mt-5 mb-4">Contacts</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <h4 class="text-center">Adresse</h4>
+                    <p class="text-center">Bibliothèque située en face de la cité U de Ngoa Ekélé, Yaoundé, Cameroun</p>
+                </div>
+                <div class="col-md-4">
+                    <h4 class="text-center">Téléphone</h4>
+                    <p class="text-center">(+237) 670 43 11 50 / 621 31 70 07</p>
+                </div>
+                <div class="col-md-4">
+                    <h4 class="text-center">Email</h4>
+                    <p class="text-center">libraryappweb@gmail.com</p>
+                </div>
+            </div>
+        </div>
+        
+
 
         <p>&copy; 2024 Bibliothèque publique</p>
     </footer>
@@ -261,11 +388,8 @@
             }, 5000);
         });
     </script>
-
 </body>
 
 </html>
-
-
 
 

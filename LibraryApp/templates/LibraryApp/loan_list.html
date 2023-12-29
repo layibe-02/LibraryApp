@@ -5,17 +5,27 @@
         <h3 class="text-light">Liste des emprunts</h3>
     </header>
 
+    <form method="GET" class="mb-3">
+        <div class="input-group">
+            <input type="text" class="form-control" name="search_query_loan" placeholder="Rechercher un emprunt (client, livre ou rendu)" aria-label="Rechercher un auteur" aria-describedby="button-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit" id="button-addon2">Rechercher</button>
+            </div>
+        </div>
+    </form>
+
+
     <a href="{% url 'LibraryApp:add_loan' %}" class="btn btn-info mb-3"><i class="bi bi-plus"></i> Ajouter un emprunt</a>
 
     <table class="table table-bordered table-striped table-hover">
         <thead class="thead-light">
             <tr>
-                <th class="text-center">Date d'emprunt</th>
-                <th class="text-center">Date de retour prévue</th>
-                <th class="text-center">Client</th>
-                <th class="text-center">Livre</th>
-                <th class="text-center">Rendu</th>
-                <th class="text-center">Actions</th>
+                <th scope="col-md-2" class="text-center">Date d'emprunt</th>
+                <th scope="col-md-2" class="text-center">Date de retour prévue</th>
+                <th scope="col-md-2" class="text-center">Client</th>
+                <th scope="col-md-2" class="text-center">Livre</th>
+                <th scope="col-md-2" class="text-center">Rendu</th>
+                <th scope="col-md-2" class="text-center">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -43,7 +53,7 @@
     }
 
     .container {
-        max-width: 1200px;
+        max-width: 95%;
         margin: auto;
         margin-top: 20px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Légère ombre */

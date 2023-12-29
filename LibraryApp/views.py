@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.contrib.auth.decorators import login_required, permission_required, user_passes_test     
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
@@ -8,7 +9,7 @@ from django.utils.html import strip_tags
 from django.utils import timezone
 from .models import Book, Customer, Loan, Author, Category
 from django.contrib import messages
-from .forms import BookForm, LoanForm, SearchForm, AuthorForm, CustomerForm, CategoryForm
+from .forms import BookForm, LoanForm, AuthorForm, CustomerForm, CategoryForm, SearchBookForm, SearchCategoryForm, SearchCustomerForm, SearchAuthorForm, SearchLoanForm
 
 #______________________________________________________________________________________________________
 
@@ -127,21 +128,19 @@ def show_customer(request, customer_id):
 
 @login_required
 def book_list(request):
-    form = SearchForm(request.GET)
+    form = SearchBookForm(request.GET)
     books = Book.objects.all().order_by("title")
 
     if form.is_valid():
-        search_query = form.cleaned_data.get('search_query')
-        #search_by_date = form.cleaned_data.get('search_by_date')
+        search_query_book = form.cleaned_data.get('search_query_book')
 
-        if search_query:
-            # Filtrez les livres par titre
-            books = books.filter(title__icontains=search_query)
-
-        #if search_by_date:
-            #Filtrez les livres par date de parution
-            #books = books.filter(date_publication__isnull=False)
-
+        if search_query_book:
+            # Filtrez les livres par titre, isbn
+            books = books.filter(
+                Q(title__icontains=search_query_book) | 
+                Q(isbn__icontains=search_query_book)
+            )
+            
     context = {
         'books': books,
         'form': form,
@@ -150,26 +149,88 @@ def book_list(request):
 
 @login_required
 def loan_list(request):
+    form = SearchLoanForm(request.GET)
     loans = Loan.objects.all().order_by("-begin_date")
-    context = {"loans": loans}
+    
+    if form.is_valid():
+        search_query_loan = form.cleaned_data.get('search_query_loan')
+
+        if search_query_loan:
+            loans = loans.filter(
+                Q(rendered__icontains=search_query_loan) | 
+                Q(customer__name__icontains=search_query_loan) | 
+                Q(book__title__icontains=search_query_loan)
+            )
+
+    context = {
+        'loans': loans,
+        'form': form,
+    }
     return render(request, "LibraryApp/loan_list.html", context) 
 
 @login_required
 def author_list(request):
-    authors = Author.objects.all()
-    context = {"authors":authors}
+    form = SearchAuthorForm(request.GET)
+    authors = Author.objects.all().order_by("name")
+    
+    if form.is_valid():
+        search_query_author = form.cleaned_data.get('search_query_author')
+
+        if search_query_author:
+            authors = authors.filter(
+                Q(name__icontains=search_query_author) | 
+                Q(username__icontains=search_query_author) | 
+                Q(nationality__icontains=search_query_author) | 
+                Q(date_of_birth__icontains=search_query_author)
+            )
+
+    context = {
+        'authors': authors,
+        'form': form,
+    }
     return render(request, "LibraryApp/author_list.html", context)
 
 @login_required
 def customer_list(request):
+    form = SearchCustomerForm(request.GET)
     customers = Customer.objects.all().order_by("-registration_date")
-    context = {"customers": customers}
+    
+    if form.is_valid():
+        search_query_customer = form.cleaned_data.get('search_query_customer')
+
+        if search_query_customer:
+            customers = customers.filter(
+                Q(name__icontains=search_query_customer) | 
+                Q(username__icontains=search_query_customer) |
+                Q(job__icontains=search_query_customer) |
+                Q(postal__icontains=search_query_customer) |
+                Q(email__icontains=search_query_customer)
+            )
+
+    context = {
+        'customers': customers,
+        'form': form,
+    }
     return render(request, "LibraryApp/customer_list.html", context)
 
 @login_required
 def category_list(request):
+    form = SearchCategoryForm(request.GET)
     categories = Category.objects.all().order_by('label')
-    context = {"categories": categories}
+    
+    if form.is_valid():
+        search_query_category = form.cleaned_data.get('search_query_category')
+
+        if search_query_category:
+            categories = categories.filter(
+                Q(code__icontains=search_query_category) | 
+                Q(label__icontains=search_query_category)
+            )
+
+    context = {
+        'categories': categories,
+        'form': form,
+    }
     return render(request, "LibraryApp/category_list.html", context)
     
 #------------------------------------------------------------------------------------------------------
