@@ -25,6 +25,7 @@
         <thead class="thead-light">
             <tr>
                 <th scope="col-md-2" class="text-center">Titre</th>
+                <th scope="col-md-2" class="text-center">Auteur(s)</th>
                 <th scope="col-md-2" class="text-center">Actions</th>
             </tr>
         </thead>
@@ -32,6 +33,12 @@
             {% for book in books %}
                 <tr>
                     <td>{{ book.title }}</td>
+                    <td>
+                        {% for author in book.authors.all %}
+                            {{ author.name }} {{ author.username }}
+                            {% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
                     <td class="text-center" align="right">
                         <a href="{% url 'LibraryApp:show_book' book.id %}" class="btn btn-primary btn-sm" title="Voir détails"><i class="bi bi-info-circle text-light"></i></a>
                         <a href="{% url 'LibraryApp:edit_book' book.id %}" class="btn btn-warning btn-sm" title="Modifier livre"><i class="bi bi-pencil text-dark"></i></a>
@@ -93,32 +100,39 @@
 
 <script>
     $(document).ready(function () {
-        // Nombre de lignes à afficher par page
         var pageSize = 5;
+        var currentPage = 1;
+        var totalRows = $('table tbody tr').length;
 
-        // Cacher toutes les lignes au-delà de la taille de la page
-        $('table tbody tr').hide();
-        $('table tbody tr').slice(0, pageSize).show();
+        function updatePageInfo() {
+            showRows();
+            var start = (currentPage - 1) * pageSize + 1;
+            var end = Math.min(currentPage * pageSize, totalRows);
+            $('#total-count').text('Affichage de ' + start + ' à ' + end + ' sur ' + totalRows + ' entiers');
+        }
 
-        // Mettre à jour le nombre total
-        $('#total-count').text($('table tbody tr').length);
+        function showRows() {
+            var startIndex = (currentPage - 1) * pageSize;
+            var endIndex = currentPage * pageSize;
+            $('table tbody tr').hide().slice(startIndex, endIndex).show();
+        }
 
-        // Gérer le bouton "Next"
+        updatePageInfo();
+
         $('#next-btn').click(function () {
-            var lastVisibleIndex = $('table tbody tr:visible:last').index();
-            $('table tbody tr').hide();
-            $('table tbody tr').slice(lastVisibleIndex + 1, lastVisibleIndex + 1 + pageSize).show();
-            $('#total-count').text($('table tbody tr').length);
+            if (currentPage < Math.ceil(totalRows / pageSize)) {
+                currentPage++;
+                showRows();
+                updatePageInfo();
+            }
         });
 
-        // Gérer le bouton "Back"
         $('#back-btn').click(function () {
-            var firstVisibleIndex = $('table tbody tr:visible:first').index();
-            var start = Math.max(0, firstVisibleIndex - pageSize);
-            var end = Math.max(0, firstVisibleIndex);
-            $('table tbody tr').hide();
-            $('table tbody tr').slice(start, end).show();
-            $('#total-count').text($('table tbody tr').length);
+            if (currentPage > 1) {
+                currentPage--;
+                showRows();
+                updatePageInfo();
+            }
         });
 
         // Gérer le bouton "Afficher tout"

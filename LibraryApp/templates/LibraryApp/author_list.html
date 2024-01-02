@@ -84,34 +84,42 @@
         border-color: #007ba7; /* Bleue céruléen */
     }
 </style>
+
 <script>
     $(document).ready(function () {
-        // Nombre de lignes à afficher par page
         var pageSize = 5;
+        var currentPage = 1;
+        var totalRows = $('table tbody tr').length;
 
-        // Cacher toutes les lignes au-delà de la taille de la page
-        $('table tbody tr').hide();
-        $('table tbody tr').slice(0, pageSize).show();
+        function updatePageInfo() {
+            showRows();
+            var start = (currentPage - 1) * pageSize + 1;
+            var end = Math.min(currentPage * pageSize, totalRows);
+            $('#total-count').text('Affichage de ' + start + ' à ' + end + ' sur ' + totalRows + ' entiers');
+        }
 
-        // Mettre à jour le nombre total
-        $('#total-count').text($('table tbody tr').length);
+        function showRows() {
+            var startIndex = (currentPage - 1) * pageSize;
+            var endIndex = currentPage * pageSize;
+            $('table tbody tr').hide().slice(startIndex, endIndex).show();
+        }
 
-        // Gérer le bouton "Next"
+        updatePageInfo();
+
         $('#next-btn').click(function () {
-            var lastVisibleIndex = $('table tbody tr:visible:last').index();
-            $('table tbody tr').hide();
-            $('table tbody tr').slice(lastVisibleIndex + 1, lastVisibleIndex + 1 + pageSize).show();
-            $('#total-count').text($('table tbody tr').length);
+            if (currentPage < Math.ceil(totalRows / pageSize)) {
+                currentPage++;
+                showRows();
+                updatePageInfo();
+            }
         });
 
-        // Gérer le bouton "Back"
         $('#back-btn').click(function () {
-            var firstVisibleIndex = $('table tbody tr:visible:first').index();
-            var start = Math.max(0, firstVisibleIndex - pageSize);
-            var end = Math.max(0, firstVisibleIndex);
-            $('table tbody tr').hide();
-            $('table tbody tr').slice(start, end).show();
-            $('#total-count').text($('table tbody tr').length);
+            if (currentPage > 1) {
+                currentPage--;
+                showRows();
+                updatePageInfo();
+            }
         });
 
         // Gérer le bouton "Afficher tout"
@@ -121,6 +129,5 @@
         });
     });
 </script>
-
 
 {% include "LibraryApp/include/end_page.html" %}

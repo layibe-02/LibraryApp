@@ -16,6 +16,32 @@ from .forms import BookForm, LoanForm, AuthorForm, CustomerForm, CategoryForm, S
 def index(request):
     return render(request, "LibraryApp/index.html")
 
+@login_required
+@permission_required("LibraryApp.change_loan")
+def render_loan(request, loan_id):
+    loan = get_object_or_404(Loan, pk=loan_id)
+
+    if request.method == 'POST':
+        # Vérifier si le livre a déjà été rendu
+        if loan.rendered:
+            messages.error(request, 'Ce livre a déjà été rendu.')
+        else:
+            # Mettre à jour le statut de rendu à True
+            loan.rendered = True
+            loan.save()
+
+            # Incrémenter le nombre d'exemplaires disponibles
+            loan.book.total_exemplaires += 1
+            loan.book.save()
+
+            messages.success(request, 'Le livre a été rendu avec succès.')
+
+            # Rediriger vers la liste des emprunts
+            return redirect('LibraryApp:loan_list')
+
+    context = {'loan': loan}
+    return render(request, 'LibraryApp/render_loan.html', context)
+
 def is_visitor(user):
     return user.groups.filter(name = "Visiteurs").exists()
 
@@ -257,13 +283,18 @@ def edit_loan(request, loan_id):
     if request.method == 'POST':
         form = LoanForm(request.POST, instance=loan)
         if form.is_valid():
+            old_rendered_state = loan.rendered  # Sauvegarder l'état précédent de rendu
+            form.save()
+
             # Vérifier si le statut de rendu a changé
-            if loan.rendered != form.cleaned_data['rendered'] and form.cleaned_data['rendered']:
-                # Le livre a été rendu, incrémenter le nombre d'exemplaires
-                loan.book.total_exemplaires += 1
+            if old_rendered_state != loan.rendered:
+                if loan.rendered:  # Le livre a été rendu, incrémenter le nombre d'exemplaires
+                    loan.book.total_exemplaires += 1
+                else:  # Le livre n'est plus rendu, décrémenter le nombre d'exemplaires
+                    loan.book.total_exemplaires -= 1
+
                 loan.book.save()
 
-            form.save()
             return redirect('LibraryApp:loan_list')
     else:
         form = LoanForm(instance=loan)

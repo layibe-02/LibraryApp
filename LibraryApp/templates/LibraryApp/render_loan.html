@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rendre Emprunt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        .button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none; /* Ajout pour enlever le soulignement du lien */
+            display: inline-block; /* Ajout pour que le lien ne prenne pas la largeur complète */
+        }
+        .success-message {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        .error-message {
+            color: #f44336;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Rendre Emprunt</h1>
+
+        <p><strong>Informations sur l'emprunt :</strong></p>
+        <p><strong>Client :</strong> {{ loan.customer }}</p>
+        <p><strong>Livre :</strong> {{ loan.book }}</p>
+        <p><strong>Date d'emprunt :</strong> {{ loan.begin_date }}</p>
+
+        <form method="post" action="{% url 'LibraryApp:render_loan' loan.id %}" class="mb-3">
+            {% csrf_token %}
+            <button class="button" type="submit">Rendre le Livre</button>
+            <a href="{% url 'LibraryApp:loan_list' %}" class="button">Retour</a>
+        </form>
+
+        {% if messages %}
+            <div>
+                {% for message in messages %}
+                    <p class="{% if message.tags == 'error' %}error-message{% else %}success-message{% endif %}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>

@@ -39,7 +39,13 @@
                     <td class="text-center">{{ loan.end_date }}</td>
                     <td class="text-center">{{ loan.customer.name }} {{ loan.customer.username }}</td>
                     <td class="text-center">{{ loan.book.title }}</td>
-                    <td class="text-center">{{ loan.rendered }}</td>
+
+                    <td class="text-center">
+                        <a href="{% url 'LibraryApp:render_loan' loan.id %}" class="btn btn-success btn-sm" title="rendre un emprunt">
+                            rendre
+                        </a>
+                    </td>
+                    
                     <td class="text-center align-right">
                         <a href="{% url 'LibraryApp:edit_loan' loan.id %}" class="btn btn-warning btn-sm" title="Modifier l'emprunt"><i class="bi bi-pencil text-dark"></i></a>
                         <a href="{% url 'LibraryApp:delete_loan' loan.id %}" class="btn btn-danger btn-sm" title="Supprimer l'emprunt"><i class="bi bi-trash-fill text-light"></i></a>
@@ -50,10 +56,9 @@
         </tbody>
     </table>
 
-    <button id="back-btn" class="btn btn-primary">Back</button>
-    <button id="next-btn" class="btn btn-primary">Next</button>
+    <button id="back-btn" class="btn btn-primary">Précédent</button>
+    <button id="next-btn" class="btn btn-primary">Suivant</button>
     <button id="show-all-btn" class="btn btn-info">Afficher tout</button>
-
 </div>
 
 <style>
@@ -108,32 +113,39 @@
 
 <script>
     $(document).ready(function () {
-        // Nombre de lignes à afficher par page
         var pageSize = 5;
+        var currentPage = 1;
+        var totalRows = $('table tbody tr').length;
 
-        // Cacher toutes les lignes au-delà de la taille de la page
-        $('table tbody tr').hide();
-        $('table tbody tr').slice(0, pageSize).show();
+        function updatePageInfo() {
+            showRows();
+            var start = (currentPage - 1) * pageSize + 1;
+            var end = Math.min(currentPage * pageSize, totalRows);
+            $('#total-count').text('Affichage de ' + start + ' à ' + end + ' sur ' + totalRows + ' entiers');
+        }
 
-        // Mettre à jour le nombre total
-        $('#total-count').text($('table tbody tr').length);
+        function showRows() {
+            var startIndex = (currentPage - 1) * pageSize;
+            var endIndex = currentPage * pageSize;
+            $('table tbody tr').hide().slice(startIndex, endIndex).show();
+        }
 
-        // Gérer le bouton "Next"
+        updatePageInfo();
+
         $('#next-btn').click(function () {
-            var lastVisibleIndex = $('table tbody tr:visible:last').index();
-            $('table tbody tr').hide();
-            $('table tbody tr').slice(lastVisibleIndex + 1, lastVisibleIndex + 1 + pageSize).show();
-            $('#total-count').text($('table tbody tr').length);
+            if (currentPage < Math.ceil(totalRows / pageSize)) {
+                currentPage++;
+                showRows();
+                updatePageInfo();
+            }
         });
 
-        // Gérer le bouton "Back"
         $('#back-btn').click(function () {
-            var firstVisibleIndex = $('table tbody tr:visible:first').index();
-            var start = Math.max(0, firstVisibleIndex - pageSize);
-            var end = Math.max(0, firstVisibleIndex);
-            $('table tbody tr').hide();
-            $('table tbody tr').slice(start, end).show();
-            $('#total-count').text($('table tbody tr').length);
+            if (currentPage > 1) {
+                currentPage--;
+                showRows();
+                updatePageInfo();
+            }
         });
 
         // Gérer le bouton "Afficher tout"
@@ -143,6 +155,5 @@
         });
     });
 </script>
-
 
 {% include "LibraryApp/include/end_page.html" %}
