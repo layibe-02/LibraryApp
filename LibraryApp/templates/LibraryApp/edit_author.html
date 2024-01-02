@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container mt-3">
-    <header class="text-center mt-3 mb-4 pb-3 btn-custom-cerulean text-light">
+    <header class="text-center mt-3 mb-4 pb-3 bg-primary text-light">
         <h3>Modifier l'auteur</h3>
     </header>
 
@@ -47,7 +47,7 @@
     </form>
     
     <div class="d-flex justify-content-between">
-        <a href="{% url 'LibraryApp:author_list' %}" class="btn btn-custom-cerulean btn-block mb-3">Lister les auteurs</a>
+        <a href="{% url 'LibraryApp:author_list' %}" class="btn btn-primary btn-block mb-3">Lister les auteurs</a>
     </div>
 </div>
 
@@ -65,12 +65,6 @@
         border-radius: 10px; /* Coins arrondis */
         padding: 20px;
         background-color: #fff;
-    }
-
-    .btn-custom-cerulean {
-        color: #ffffff;
-        background-color: #007ba7; /* Bleue céruléen personnalisée */
-        border-color: #007ba7; /* Bleue céruléen personnalisée */
     }
 
     /* Style pour le formulaire */
