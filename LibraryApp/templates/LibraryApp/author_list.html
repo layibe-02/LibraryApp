@@ -14,8 +14,10 @@
         </div>
     </form>
 
-    <a href="{% url 'LibraryApp:add_author' %}" class="btn btn-custom-cerulean mb-3"><i class="bi bi-plus text-dark"></i> Ajouter un auteur</a>
+    <a href="{% url 'LibraryApp:add_author' %}" class="btn btn-primary mb-3"><i class="bi bi-plus text-dark"></i> Ajouter un auteur</a>
     
+    <p>Total des auteurs : <span id="total-count">{{ authors|length }}</span></p>
+
     <table class="table table-bordered table table-striped table-hover">
         <thead class="thead-light">
             <tr>
@@ -40,7 +42,9 @@
             {% endfor %}
         </tbody>
     </table>
-
+    <button id="back-btn" class="btn btn-primary">Back</button>
+    <button id="next-btn" class="btn btn-primary">Next</button>
+    <button id="show-all-btn" class="btn btn-info">Afficher tout</button>
 </div>
 
 <style>
@@ -80,5 +84,43 @@
         border-color: #007ba7; /* Bleue céruléen */
     }
 </style>
+<script>
+    $(document).ready(function () {
+        // Nombre de lignes à afficher par page
+        var pageSize = 5;
+
+        // Cacher toutes les lignes au-delà de la taille de la page
+        $('table tbody tr').hide();
+        $('table tbody tr').slice(0, pageSize).show();
+
+        // Mettre à jour le nombre total
+        $('#total-count').text($('table tbody tr').length);
+
+        // Gérer le bouton "Next"
+        $('#next-btn').click(function () {
+            var lastVisibleIndex = $('table tbody tr:visible:last').index();
+            $('table tbody tr').hide();
+            $('table tbody tr').slice(lastVisibleIndex + 1, lastVisibleIndex + 1 + pageSize).show();
+            $('#total-count').text($('table tbody tr').length);
+        });
+
+        // Gérer le bouton "Back"
+        $('#back-btn').click(function () {
+            var firstVisibleIndex = $('table tbody tr:visible:first').index();
+            var start = Math.max(0, firstVisibleIndex - pageSize);
+            var end = Math.max(0, firstVisibleIndex);
+            $('table tbody tr').hide();
+            $('table tbody tr').slice(start, end).show();
+            $('#total-count').text($('table tbody tr').length);
+        });
+
+        // Gérer le bouton "Afficher tout"
+        $('#show-all-btn').click(function () {
+            $('table tbody tr').show();
+            $('#total-count').text($('table tbody tr').length);
+        });
+    });
+</script>
+
 
 {% include "LibraryApp/include/end_page.html" %}

@@ -1,19 +1,54 @@
 {% include "LibraryApp/include/begin_page.html" %}
 
 <div class="container mt-5">
-    <header class="text-center mt-3 mb-4 pb-3 btn-custom-cerulean">
-        <h3 class="text-light">Ajout d'un client</h3>
+    <header class="text-center mt-3 mb-4 pb-3 btn-primary text-light">
+        <h1>Ajout d'un client</h1>
     </header>
 
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <form method="post" action="{% url 'LibraryApp:add_customer' %}" class="mb-3">
                 {% csrf_token %}
-                <div class="form-group">
-                    <label for="{{ form.label_tag }}" class="text-primary">{{ form.label_tag }}</label>
-                    {{ form }}
+                <div class="form-group row">
+                    <label for="{{ form.name.id_for_label }}" class="col-sm-4 col-form-label text-primary">{{ form.name.label_tag }}</label>
+                    <div class="col-sm-8">
+                        {{ form.name }}
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-success btn-block">Enregistrer</button>
+
+                <div class="form-group row">
+                    <label for="{{ form.username.id_for_label }}" class="col-sm-4 col-form-label text-primary">{{ form.username.label_tag }}</label>
+                    <div class="col-sm-8">
+                        {{ form.username }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="{{ form.job.id_for_label }}" class="col-sm-4 col-form-label text-primary">{{ form.job.label_tag }}</label>
+                    <div class="col-sm-8">
+                        {{ form.job }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="{{ form.postal.id_for_label }}" class="col-sm-4 col-form-label text-primary">{{ form.postal.label_tag }}</label>
+                    <div class="col-sm-8">
+                        {{ form.postal }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="{{ form.email.id_for_label }}" class="col-sm-4 col-form-label text-primary">{{ form.email.label_tag }}</label>
+                    <div class="col-sm-8">
+                        {{ form.email }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-8 offset-sm-4">
+                        <button type="submit" class="btn btn-success btn-block">Enregistrer</button>
+                    </div>
+                </div>
             </form>
 
             <div class="d-flex justify-content-between">
@@ -26,10 +61,10 @@
 
 <style>
     body {
-        background: linear-gradient(to right, #87CEEB, #1E90FF); /* Dégradé de couleurs pour un fond attrayant */
+        background: linear-gradient(to right, #87CEEB, #1E90FF);
         margin-top: 25px;
     }
-
+    
     .container {
         width-max: 95%;
         margin: auto;
@@ -38,50 +73,68 @@
         padding: 20px;
         background-color: #fff;
     }
-
+    
     header {
         width: 100%;
         padding: 20px;
         border-radius: 8px;
     }
-
+    
     form {
         width-max: 75%;
         margin-top: 20px;
     }
-
+    
     button {
         margin-top: 20px;
     }
-
-    .btn-custom-cerulean {
-        color: #ffffff;
-        background-color: #007ba7;
-        border-color: #007ba7;
-        border-radius: 8px;
-    }
-
-    @media (max-width: 576px) {
-        body {
-            margin-top: 70px;
-        }
-
-        header {
-            padding: 10px;
-        }
-    }
-
+    
     .btn-primary {
         color: #ffffff;
         background-color: #007ba7;
         border-color: #007ba7;
         border-radius: 8px;
     }
-
+    
+    .btn-success {
+        color: #ffffff;
+        background-color: #28a745;
+        border-color: #28a745;
+        border-radius: 8px;
+    }
+    
+    @media (max-width: 576px) {
+        body {
+            margin-top: 70px;
+        }
+    
+        header {
+            padding: 10px;
+        }
+    }
+    
     label {
         padding-top: 8px;
-        color: #1E90FF; /* Couleur bleue foncée pour les labels */
+        color: #1E90FF;
     }
 </style>
 
-{% include "LibraryApp/include/end_page.html" %}
+<script>
+    $(document).ready(function () {
+        // Initialisez le champ de date de début
+        $('#id_begin_date').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true
+        });
+
+        // Initialisez le champ de date de fin
+        $('#id_end_date').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true
+        });
+    });
+</script>
+
+{% include "LibraryApp/include/end_page.html"%}

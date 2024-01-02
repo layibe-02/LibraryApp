@@ -2,23 +2,59 @@
 
 {% block content %}
 <div class="container mt-5">
-    <header class="text-center mt-3 mb-4 pb-3 btn-custom-cerulean">
-        <h3 class="text-light">Modifier le client</h3>
+    <header class="text-center mt-3 mb-4 pb-3 btn-custom-cerulean text-light">
+        <h1>Modifier le client</h1>
     </header>
 
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <form method="post" action="{% url 'LibraryApp:edit_customer' customer.id %}" class="mb-3">
                 {% csrf_token %}
-                <div class="form-group">
-                    <label for="{{ form.label_tag }}" class="text-primary">{{ form.label_tag }}</label>
-                    {{ form }}
+
+                <div class="form-group row">
+                    <label for="{{ form.name.id_for_label }}" class="col-sm-4 col-form-label text-primary">{{ form.name.label_tag }}</label>
+                    <div class="col-sm-8">
+                        {{ form.name }}
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-warning btn-block">Enregistrer</button>
+
+                <div class="form-group row">
+                    <label for="{{ form.username.id_for_label }}" class="col-sm-4 col-form-label text-primary">{{ form.username.label_tag }}</label>
+                    <div class="col-sm-8">
+                        {{ form.username }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="{{ form.job.id_for_label }}" class="col-sm-4 col-form-label text-primary">{{ form.job.label_tag }}</label>
+                    <div class="col-sm-8">
+                        {{ form.job }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="{{ form.postal.id_for_label }}" class="col-sm-4 col-form-label text-primary">{{ form.postal.label_tag }}</label>
+                    <div class="col-sm-8">
+                        {{ form.postal }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="{{ form.email.id_for_label }}" class="col-sm-4 col-form-label text-primary">{{ form.email.label_tag }}</label>
+                    <div class="col-sm-8">
+                        {{ form.email }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-8 offset-sm-4">
+                        <button type="submit" class="btn btn-success btn-block">Enregistrer</button>
+                    </div>
+                </div>
             </form>
 
             <div class="d-flex justify-content-between">
-                <a href="{% url 'LibraryApp:customer_list' %}" class="btn btn-primary btn-block mb-3">Lister les clients</a>
+                <a href="{% url 'LibraryApp:customer_list' %}" class="btn btn-primary btn-block mb-3">Liste des clients</a>
                 <a href="{% url 'LibraryApp:index' %}" class="btn btn-primary btn-block mb-3">Retour au menu</a>
             </div>
         </div>
@@ -46,24 +82,33 @@
     }
 
     form {
-        margin-top: 20px;
+        max-width: 600px;
+        margin: auto;
     }
 
-    button {
-        margin-top: 20px;
+    label {
+        padding-top: 8px;
+        color: #1E90FF;
+    }
+
+    .btn-success {
+        color: #ffffff;
+        background-color: #28a745;
+        border-color: #28a745;
+        border-radius: 8px;
+    }
+
+    .btn-warning {
+        color: #ffffff;
+        background-color: #ff2400;
+        border-color: #ff2400;
+        border-radius: 8px;
     }
 
     .btn-custom-cerulean {
         color: #ffffff;
         background-color: #007ba7;
         border-color: #007ba7;
-        border-radius: 8px;
-    }
-
-    .btn-warning {
-        color: #ffffff;
-        background-color: #FFD700; /* Jaune doré pour le bouton de sauvegarde */
-        border-color: #FFD700;
         border-radius: 8px;
     }
 
@@ -76,20 +121,7 @@
             padding: 10px;
         }
     }
-
-    .btn-primary {
-        color: #ffffff;
-        background-color: #007ba7;
-        border-color: #007ba7;
-        border-radius: 8px;
-    }
-
-    label {
-        padding-top: 8px;
-        color: #1E90FF;
-    }
 </style>
 
-{% endblock %}
-
 {% include "LibraryApp/include/end_page.html" %}
+{% endblock %}

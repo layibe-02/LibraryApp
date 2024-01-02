@@ -18,6 +18,14 @@
             margin: 0;
         }
 
+
+        body.background-image {
+            background-image: url('/static/LibraryApp/css/images/img23.jpg'); /* Remplacez le chemin par le chemin réel de votre image */
+            background-size: cover; /* Ajuste la taille de l'image pour couvrir toute la page */
+            background-position: center; /* Centre l'image */
+            background-repeat: no-repeat; /* N'affiche pas l'image en mosaïque */
+        }
+
         form {
             max-width: 400px;
             width: 100%;
@@ -84,7 +92,7 @@
     </style>
 </head>
 
-<body>
+<body class="background-image">
 
     <form method="post">
         {% csrf_token %}

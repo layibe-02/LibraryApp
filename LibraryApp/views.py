@@ -19,6 +19,19 @@ def index(request):
 def is_visitor(user):
     return user.groups.filter(name = "Visiteurs").exists()
 
+from .tasks import send_late_reminder_email
+def email_task(request):
+    result = send_late_reminder_email.delay()
+    return render(request, 'LibraryApp/email_task.html', {'result': result})
+
+def email_task_result(request, task_id):
+    resultat = send_late_reminder_email.AsyncResult(task_id)
+    
+    if resultat.ready():
+        return render(request, 'LibraryApp/email_task_result.html', {'resultat': resultat})
+    return render(request, 'LibraryApp/email_task_result.html', {'resultat': 'result not ready yet'})
+
+
 #------------------------------------------------------------------------------------------------------
 
 @login_required
@@ -119,6 +132,7 @@ def show_book(request, book_id):
     return render(request, "LibraryApp/show_book.html", context)
 
 @login_required
+@permission_required("LibraryApp.change_customer")
 def show_customer(request, customer_id):
     customer = get_object_or_404(Customer, pk=customer_id)
     context = {"customer": customer}

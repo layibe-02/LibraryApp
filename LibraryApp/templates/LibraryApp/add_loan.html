@@ -128,5 +128,23 @@
     }
 </style>
 
+<script>
+    $(document).ready(function () {
+        // Initialisez le champ de date de début
+        $('#id_begin_date').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true
+        });
+
+        // Initialisez le champ de date de fin
+        $('#id_end_date').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true
+        });
+    });
+</script>
+
 {% include "LibraryApp/include/end_page.html"%}
 

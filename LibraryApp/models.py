@@ -72,17 +72,14 @@ class Book(models.Model):
     
 class Loan(models.Model):
     begin_date = models.DateTimeField(default=timezone.now, verbose_name="Date d'emprunt")
-    end_date = models.DateField(default=timezone.now() + timezone.timedelta(days=3), null=True, verbose_name="Delai")
+    end_date = models.DateField(default=timezone.now() + timedelta(days=3), null=True, verbose_name="Delai")
     customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING, verbose_name="Client")
     book = models.ForeignKey(Book, on_delete=models.DO_NOTHING, verbose_name="Livre")
-    rendered =  models.BooleanField(default=False, verbose_name="Rendu")
-    
+    rendered = models.BooleanField(default=False, verbose_name="Rendu")
+
     def __str__(self) -> str:
-        return str(self.begin_date)
-    
-    def __str__(self) -> str:
-        return str(self.end_date)
-    
+        return f"{self.customer} - {self.book} - Emprunt le {self.begin_date}"
+
     class Meta:
         verbose_name = "Emprunt"
         verbose_name_plural = "Emprunts"

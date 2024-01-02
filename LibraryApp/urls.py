@@ -5,6 +5,8 @@ app_name = 'LibraryApp'
 
 urlpatterns = [
     path('', views.index, name='index'),  # page d'accueil
+    path('email/', views.email_task, name='email_task'), 
+    path('email/<str:task_id>/', views.email_task_result, name='email_task_result'), 
     #-------------------------------------------------------------------------------------------
     path('book_list/', views.book_list, name='book_list'),
     path('loan_list/', views.loan_list, name='loan_list'),

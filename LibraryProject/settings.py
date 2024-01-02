@@ -119,7 +119,6 @@ STATICFILES_DIR = [
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
 # Configuration de Celery
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'django-db'
@@ -135,4 +134,3 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': timedelta(days=1),  # Planifiez la tâche tous les jours
     },
 }
-
