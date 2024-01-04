@@ -15,7 +15,8 @@
         </div>
     </form>
     
-    <a href="{% url 'LibraryApp:add_book' %}" class="btn btn-primary mb-3"><i class="bi bi-plus text-light"></i> Ajouter un client</a>
+    <a href="{% url 'LibraryApp:index' %}" class="btn btn-secondary mb-3" title="Retour à la liste"><i class="bi bi-arrow-left-circle text-light"></i> Retour</a>
+    <a href="{% url 'LibraryApp:add_book' %}" class="btn btn-primary mb-3"><i class="bi bi-plus text-light"></i> Ajouter</a>
 
     <div class="total-count">
         <p>Total des livres : <span id="total-count">{{ books|length }}</span></p>
@@ -25,7 +26,6 @@
         <thead class="thead-light">
             <tr>
                 <th scope="col-md-2" class="text-center">Titre</th>
-                <th scope="col-md-2" class="text-center">Auteur(s)</th>
                 <th scope="col-md-2" class="text-center">Actions</th>
             </tr>
         </thead>
@@ -33,26 +33,19 @@
             {% for book in books %}
                 <tr>
                     <td>{{ book.title }}</td>
-                    <td>
-                        {% for author in book.authors.all %}
-                            {{ author.name }} {{ author.username }}
-                            {% if not forloop.last %}, {% endif %}
-                        {% endfor %}
-                    </td>
+                
                     <td class="text-center" align="right">
-                        <a href="{% url 'LibraryApp:show_book' book.id %}" class="btn btn-primary btn-sm" title="Voir détails"><i class="bi bi-info-circle text-light"></i></a>
-                        <a href="{% url 'LibraryApp:edit_book' book.id %}" class="btn btn-warning btn-sm" title="Modifier livre"><i class="bi bi-pencil text-dark"></i></a>
-                        <a href="{% url 'LibraryApp:delete_book' book.id %}" class="btn btn-danger btn-sm" title="Supprimer livre"><i class="bi bi-trash-fill text-light"></i></a>
-                        <a href="{% url 'LibraryApp:index' %}" class="btn btn-secondary btn-sm" title="Retour à la liste"><i class="bi bi-arrow-left-circle text-light"></i></a>
+                        <a href="{% url 'LibraryApp:show_book' book.id %}" class="btn btn-primary btn-sm" title="Voir détails"><i class="bi bi-info-circle text-light"> Détail</i></a>
+                        <a href="{% url 'LibraryApp:edit_book' book.id %}" class="btn btn-warning btn-sm" title="Modifier livre"><i class="bi bi-pencil text-dark"></i> Modifier</a>
+                        <a href="{% url 'LibraryApp:delete_book' book.id %}" class="btn btn-danger btn-sm" title="Supprimer livre"><i class="bi bi-trash-fill text-light"> Suppimer</i></a>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-
-    <button id="back-btn" class="btn btn-primary">Précédent</button>
-    <button id="next-btn" class="btn btn-primary">Suivant</button>
-    <button id="show-all-btn" class="btn btn-info">Afficher tout</button>
+    <button id="back-btn" class="btn btn-primary"><i class="bi bi-arrow-left"></i> Précédent</button>
+    <button id="next-btn" class="btn btn-primary">Suivant <i class="bi bi-arrow-right"></i></button>
+    <button id="show-all-btn" class="btn btn-info">Tout <i class="bi bi-eye"></i></button>
 
 </div>
 

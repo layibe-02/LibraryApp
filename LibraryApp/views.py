@@ -3,7 +3,9 @@ from django.contrib.auth.decorators import login_required, permission_required, 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.template import loader 
+from django.views.generic import TemplateView
 from django.core.mail import EmailMessage
+from datetime import timedelta
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.utils import timezone
@@ -15,6 +17,7 @@ from .forms import BookForm, LoanForm, AuthorForm, CustomerForm, CategoryForm, S
 
 def index(request):
     return render(request, "LibraryApp/index.html")
+
 
 @login_required
 @permission_required("LibraryApp.change_loan")
@@ -44,18 +47,6 @@ def render_loan(request, loan_id):
 
 def is_visitor(user):
     return user.groups.filter(name = "Visiteurs").exists()
-
-from .tasks import send_late_reminder_email
-def email_task(request):
-    result = send_late_reminder_email.delay()
-    return render(request, 'LibraryApp/email_task.html', {'result': result})
-
-def email_task_result(request, task_id):
-    resultat = send_late_reminder_email.AsyncResult(task_id)
-    
-    if resultat.ready():
-        return render(request, 'LibraryApp/email_task_result.html', {'resultat': resultat})
-    return render(request, 'LibraryApp/email_task_result.html', {'resultat': 'result not ready yet'})
 
 
 #------------------------------------------------------------------------------------------------------

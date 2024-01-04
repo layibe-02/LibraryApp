@@ -119,18 +119,19 @@ STATICFILES_DIR = [
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Configuration de Celery
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'django-db'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'Africa/Douala'
 
 
-CELERY_BEAT_SCHEDULE = {
-    'envoi_rappel_retard': {
-        'task': 'LibraryProject.LibraryApp.tasks.send_late_reminder_email',
-        'schedule': timedelta(days=1),  # Planifiez la tâche tous les jours
+
+# CONFIGURATION DE L'API SENDINBLUE
+
+EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
+
+ANYMAIL = {
+    "SENDINBLUE_API_KEY": "xkeysib-...",
+    "SEND_DEFAULTS": {
+        "tags": ["app"]
     },
+    "DEBUG_API_REQUESTS": DEBUG,
 }
+
+

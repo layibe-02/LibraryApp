@@ -22,21 +22,22 @@
         .container {
             flex: 1;
             display: flex;
-            width: 100%;
+            max-width: 100%; /* Changer width à max-width */
             margin: auto;
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-
+        
         .containeur {
             flex: 1;
             display: flex;
+            max-width: 100%; /* Changer width à max-width */
             margin: auto;
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+        }        
 
         header {
             width: 100%;
@@ -85,7 +86,7 @@
         }
 
         aside {
-            width: 20%;
+            max-width: 20%;
             background-color: #2980b9;
             padding: 20px;
             border-radius: 10px;
@@ -126,7 +127,7 @@
         }
 
         main {
-            width: 80%;
+            max-width: 80%;
             padding: 20px;
         }
 
@@ -181,6 +182,71 @@
             text-align: left;
         }
         
+        header {
+            box-shadow: 0 4px 2px -2px gray; /* Ajout d'une ombre à la navbar */
+        }
+
+        .navbar-brand {
+            font-size: 20px; /* Réduire la taille du logo */
+            margin-right: 10px;
+        }
+
+        .navbar {
+            box-shadow: 0 4px 2px -2px gray; /* Ajout d'une ombre à la navbar */
+        }
+
+        .container-fluid {
+            background-color: #f0f8ff; /* Fond du container */
+            padding: 20px; /* Ajout de marge intérieure */
+        }
+
+        aside {
+            border: 1px solid #ddd; /* Ajout d'une bordure à l'aside */
+            border-radius: 10px;
+            margin: 20px;
+            padding: 20px;
+        }
+
+        {% comment %} main {
+            border: 1px solid #ddd; /* Ajout d'une bordure au main */
+            border-radius: 10px;
+            margin: 20px;
+            padding: 20px;
+        } {% endcomment %}
+
+        {% comment %} .carousel {
+            border: 1px solid #ddd; /* Ajout d'une bordure au carousel */
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .carousel-control-prev, .carousel-control-next {
+            background-color: #3498db; /* Couleur de fond des contrôles du carousel */
+        }
+
+        .carousel-control-prev-icon, .carousel-control-next-icon {
+            background-color: #fff; /* Couleur de l'icône des contrôles du carousel */
+        } {% endcomment %}
+
+        .image-container {
+            border: 1px solid #ddd; /* Ajout d'une bordure aux images */
+            border-radius: 10px;
+            overflow: hidden;
+            margin-right: 10px;
+            padding: 10px;
+        }
+
+        .description {
+            padding: 10px;
+            background-color: #f0f8ff; /* Fond de la description */
+        }
+
+        footer {
+            background-color: #343a40; /* Fond du footer */
+            color: #fff; /* Couleur du texte dans le footer */
+            padding: 20px 0;
+            text-align: center;
+        }
 
     </style>
 </head>
@@ -188,9 +254,9 @@
 <body>
 
     <header>
-        <div class="logo">
-            <i class="fas fa-book"></i> Bibliothèque
-        </div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="#"><i class="fas fa-book"></i> Bibliothèque</a>
+        </nav>
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -308,25 +374,51 @@
             </div>
         </main>
     </div>
-            
-    <footer class="text-center">
+
+    <h2 class="text-center" style="margin-top: 20px;">L'équipe de développement</h2>
+    <div class="d-flex justify-content-between align-items-center" style="margin: 10px; padding: 3px">
+    
+        <div class="image-container">
+            <img src="{% static 'LibraryApp/css/images/img28.jpg' %}" alt="Image 28" class="img-fluid" style="max-width: 100%; max-height: 30em; border-radius: 10px;">
+            <div class="description">
+                <p>Tematio Zébazé Powera Ziwfiline <br>étudiante, licence III, réseau<br> Université de Yaoundé 1/Cameroun</p>
+            </div>
+        </div>
+
+        <div class="image-container">
+            <img src="{% static 'LibraryApp/css/images/img27.jpg' %}" alt="Image 27" class="img-fluid" style="max-width: 100%; max-height: 30em; border-radius: 10px;">
+            <div class="description">
+                <p>Layibé Yayibe Narcisse <br>étudiant, licence III, data science<br> Université de Yaoundé 1/Cameroun</p>
+            </div>
+        </div>
+    
+        <div class="image-container">
+            <img src="{% static 'LibraryApp/css/images/img29.jpg' %}" alt="Image 29" class="img-fluid" style="max-width: 100%; max-height: 30em; border-radius: 10px;">
+            <div class="description">
+                <p>Mahamat Salet Mahamat <br>étudiant, licence III, génie logiciel<br> Université de Yaoundé 1/Cameroun</p>
+            </div>
+        </div>
+    
+    </div>
+    
+    <footer class="text-center bg-dark text-light">
 
         <div id="about" class="containeur">
             <h2 class="text-center text-dark mt-5 mb-4">À propos</h2>
             <div class="col-md-4 text-justify">
-                <h6 class="text-center">Fonctionnalité 1</h6>
+                <h6 class="text-center text-dark">Fonctionnalité 1</h6>
                 <ul>
                     <li>Gérez efficacement notre bibliothèque avec notre application web d'administration.</li>
                     <li>Effectuez des opérations sur les emprunts, les clients, les livres, les auteurs et les catégories de livres.</li>
                 </ul>
             </div>
             <div class="col-md-4 text-justify">
-                <h6 class="text-center">Fonctionnalité 2</h6>
+                <h6 class="text-center text-dark">Fonctionnalité 2</h6>
                 <ul>
                     <li>Les administrateurs ont un contrôle total.</li>
                     <li>Les gestionnaires peuvent effectuer des opérations spécifiques</li>
                     <li>Les visiteurs n'ont que droit à la lecture</li>
-                    <li>Envoi automatique des emails aux clients en cas de bésoins</li>
+                    <li>Envoi automatique des emails aux clients en cas de retard de la restitution d'un livre</li>
                 </ul>
             </div>
         </div>        
@@ -335,7 +427,7 @@
             <h2 class="text-center text-dark mt-5 mb-4">Services</h2>
             <div class="row">
                 <div class="col-md-4 text-justify">
-                    <h6 class="text-center">Service 1</h6>
+                    <h6 class="text-center text-dark">Service 1</h6>
                     <ul>
                         <li>Ajout</li>
                         <li>Suppression</li>
@@ -343,13 +435,13 @@
                     </ul>
                 </div>
                 <div class="col-md-4 text-justify">
-                    <h6 class="text-center">Service 2</h6>
+                    <h6 class="text-center text-dark">Service 2</h6>
                     <ul>
                         <li>Gestion complète des clients, livres, auteurs et catégories.</li>
                     </ul>
                 </div>
                 <div class="col-md-4 text-justify">
-                    <h6 class="text-center">Service 3</h6>
+                    <h6 class="text-center text-dark">Service 3</h6>
                     <ul>
                         <li>Détails sur les clients et les livres disponibles.</li>
                     </ul>
@@ -361,19 +453,19 @@
             <h2 class="text-center text-dark mt-5 mb-4">Contacts</h2>
             <div class="row">
                 <div class="col-md-4 text-justify">
-                    <h6 class="text-center">Adresse</h6>
+                    <h6 class="text-center text-dark">Adresse</h6>
                     <ul>
                         <li>Bibliothèque située en face de la cité U de Ngoa Ekélé, Yaoundé, Cameroun</li>
                     </ul>
                 </div>
                 <div class="col-md-4 text-justify">
-                    <h6 class="text-center">Téléphone</h6>
+                    <h6 class="text-center text-dark">Téléphone</h6>
                     <ul>
                         <li>(+237) 670 43 11 50 / 621 31 70 07</li>
                     </ul>
                 </div>
                 <div class="col-md-4 text-justify">
-                    <h6 class="text-center">E-mail</h6>
+                    <h6 class="text-center text-dark">E-mail</h6>
                     <ul>
                         <li>libraryappweb@gmail.com</li>
                     </ul>

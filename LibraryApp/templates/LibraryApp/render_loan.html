@@ -8,7 +8,7 @@
         body {
             font-family: 'Avantgarde', TeX Gyre Adventor, URW Gothic L, sans-serif; 
             background-color: #f4f4f4;
-            margin: 20px;
+            margin: 100px;
         }
         .container {
             max-width: 600px;
@@ -56,6 +56,7 @@
         <p><strong>Client :</strong> {{ loan.customer }}</p>
         <p><strong>Livre :</strong> {{ loan.book }}</p>
         <p><strong>Date d'emprunt :</strong> {{ loan.begin_date }}</p>
+        <p><strong>Date delai :</strong> {{ loan.end_date }}</p>
 
         <form method="post" action="{% url 'LibraryApp:render_loan' loan.id %}" class="mb-3">
             {% csrf_token %}

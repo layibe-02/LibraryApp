@@ -14,8 +14,8 @@
         </div>
     </form>
 
-
-    <a href="{% url 'LibraryApp:add_loan' %}" class="btn btn-info mb-3"><i class="bi bi-plus"></i> Ajouter un emprunt</a>
+    <a href="{% url 'LibraryApp:index' %}" class="btn btn-secondary mb-3" title="Retour à la liste"><i class="bi bi-arrow-left-circle text-light"></i> Retour</a>
+    <a href="{% url 'LibraryApp:add_loan' %}" class="btn btn-info mb-3"><i class="bi bi-plus"></i> Ajouter</a>
    
     <div class="total-count">
         <p>Total des emprunts : <span id="total-count">{{ loans|length }}</span></p>
@@ -49,16 +49,15 @@
                     <td class="text-center align-right">
                         <a href="{% url 'LibraryApp:edit_loan' loan.id %}" class="btn btn-warning btn-sm" title="Modifier l'emprunt"><i class="bi bi-pencil text-dark"></i></a>
                         <a href="{% url 'LibraryApp:delete_loan' loan.id %}" class="btn btn-danger btn-sm" title="Supprimer l'emprunt"><i class="bi bi-trash-fill text-light"></i></a>
-                        <a href="{% url 'LibraryApp:index' %}" class="btn btn-secondary btn-sm" title="Retour à la liste"><i class="bi bi-arrow-left-circle text-light"></i></a>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    <button id="back-btn" class="btn btn-primary">Précédent</button>
-    <button id="next-btn" class="btn btn-primary">Suivant</button>
-    <button id="show-all-btn" class="btn btn-info">Afficher tout</button>
+    <button id="back-btn" class="btn btn-primary"><i class="bi bi-arrow-left"></i> Précédent</button>
+    <button id="next-btn" class="btn btn-primary">Suivant <i class="bi bi-arrow-right"></i></button>
+    <button id="show-all-btn" class="btn btn-info">Tout <i class="bi bi-eye"></i></button>
 </div>
 
 <style>
@@ -109,6 +108,7 @@
         background-color: #007ba7; /* Bleue céruléen */
         border-color: #007ba7; /* Bleue céruléen */
     }
+    
 </style>
 
 <script>
